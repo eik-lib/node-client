@@ -70,3 +70,29 @@ test('development mode false', t => {
     ]);
     t.end();
 });
+
+test('development mode false, using tagOptions', t => {
+    const c = new Client({
+        path: './test/mocks/assets-3.json',
+        development: false,
+    });
+
+    t.same(JSON.parse(JSON.stringify(c.js)), [
+        {
+            type: 'module',
+            async: true,
+            defer: true,
+            value: 'http://localhost:4001/my-org/js/my-app-name/1.0.0/index.js',
+        },
+    ]);
+    t.same(JSON.parse(JSON.stringify(c.css)), [
+        {
+            type: 'text/css',
+            value:
+                'http://localhost:4001/my-org/css/my-app-name/1.0.0/index.css',
+            rel: 'stylesheet',
+            title: 'my title',
+        },
+    ]);
+    t.end();
+});

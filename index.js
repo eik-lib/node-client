@@ -31,7 +31,14 @@ function readAssetsJson(path) {
 module.exports = class Client {
     constructor({ development = false, path = './assets.json' }) {
         let meta = readAssetsJson(path);
-        const { server, inputs, organisation, name, version } = meta;
+        const {
+            server,
+            inputs,
+            organisation,
+            name,
+            version,
+            tagOptions = {},
+        } = meta;
         this.scripts = [];
         this.styles = [];
 
@@ -65,6 +72,7 @@ module.exports = class Client {
         if (inputs.js) {
             this.scripts.push(
                 new AssetJs({
+                    ...tagOptions.js,
                     value: `${server}/${organisation}/js/${name}/${version}/index.js`,
                     type: 'module',
                 })
@@ -73,6 +81,7 @@ module.exports = class Client {
         if (inputs.css) {
             this.styles.push(
                 new AssetCss({
+                    ...tagOptions.css,
                     value: `${server}/${organisation}/css/${name}/${version}/index.css`,
                 })
             );
