@@ -18,59 +18,58 @@ function validateMeta(meta) {
         throw new Error(
             'asset definition file missing required key "organisation"'
         );
+    return meta;
+}
+
+function readAssetsJson(path) {
+    const metaPath = join(pkgDir.sync(), path);
+    const metaString = readFileSync(metaPath, 'utf8');
+    return validateMeta(JSON.parse(metaString));
 }
 
 module.exports = class Client {
-    constructor({ js, css, development = false }) {
-        let meta = null;
+    constructor({ development = false, path = './assets.json' }) {
+        let meta = readAssetsJson(path);
+        const { server, inputs, organisation, name, version } = meta;
         this.scripts = [];
         this.styles = [];
 
-        if (development) {
-            if (js) {
+        if (development && meta.development) {
+            if (meta.development.js) {
                 this.scripts.push({
                     type: 'esm',
-                    value: js,
+                    value: meta.development.js,
                     development: true,
                 });
             }
-            if (css) {
+            if (meta.development.css) {
                 this.styles.push({
-                    value: css,
+                    type: 'default',
+                    value: meta.development.css,
                     development: true,
                 });
             }
             return;
         }
 
-        try {
-            const metaPath = join(pkgDir.sync(), 'assets.json');
-            const metaString = readFileSync(metaPath, 'utf8');
-            meta = JSON.parse(metaString);
-        } catch (err) {}
-
-        if (meta) {
-            validateMeta(meta);
-
-            const { server, inputs, organisation, name, version } = meta;
-
-            if (inputs.js) {
-                this.scripts.push({
-                    value: `${server}/${organisation}/bundle/${name}/${version}/index.js`,
-                    type: 'esm',
-                });
-            }
-            if (inputs.css) {
-                this.styles.push({
-                    value: `${server}/${organisation}/bundle/${name}/${version}/index.css`,
-                });
-            }
+        if (inputs.js) {
+            this.scripts.push({
+                value: `${server}/${organisation}/js/${name}/${version}/index.js`,
+                type: 'esm',
+            });
+        }
+        if (inputs.css) {
+            this.styles.push({
+                type: 'default',
+                value: `${server}/${organisation}/css/${name}/${version}/index.css`,
+            });
         }
     }
 
     get js() {
         return this.scripts;
     }
+
     get css() {
         return this.styles;
     }

@@ -17,14 +17,10 @@ const AssetPipe = require('@asset-pipe/node-client');
 ### in development mode the client will build an object pointing to development assets
 
 ```js
-const client = new AssetPipe({
-    js: '/assets/script.js',
-    css: '/assets/styles.css',
-    development: true,
-});
+const client = new AssetPipe({ development: true });
 
-// client.js will be an object of the form { type: 'esm', value: 'http://<localhost>:<port>/assets/script.js' }
-// client.css will be an object of the form { type: 'default', value: 'http://<localhost>:<port>/assets/styles.css' }
+// client.js will be an array of the form [{ type: 'esm', value: 'http://<localhost>:<port>/assets/script.js' }]
+// client.css will be an array of the form [{ type: 'default', value: 'http://<localhost>:<port>/assets/styles.css' }]
 ```
 
 ### in production mode the client will build an object pointing to production assets
@@ -32,12 +28,8 @@ const client = new AssetPipe({
 The client will read your local `assets.json` file and build a object based on the values found therein.
 
 ```js
-const client = new AssetPipe({
-    js: '/assets/script.js',
-    css: '/assets/styles.css',
-    development: false,
-});
+const client = new AssetPipe({ development: false });
 
-// client.js will be an object of the form { type: 'esm', value: 'http://<asset server>/finn/js/my-app/1.0.0/index.js' }
-// client.css will be an object of the form { type: 'default', value: 'http://<asset server>/finn/css/my-app/1.0.0/index.css' }
+// client.js will be an object of the form [{ type: 'esm', value: 'http://<asset server>/finn/js/my-app/1.0.0/index.js' }]
+// client.css will be an object of the form [{ type: 'default', value: 'http://<asset server>/finn/css/my-app/1.0.0/index.css' }]
 ```

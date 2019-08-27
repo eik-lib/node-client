@@ -4,12 +4,15 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "tap test"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
         "pkg-dir": "^4.2.0"
+    },
+    "devDependencies": {
+        "tap": "^14.6.1"
     }
 }
