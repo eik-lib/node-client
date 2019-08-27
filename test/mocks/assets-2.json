@@ -1,0 +1,22 @@
+{
+    "organisation": "my-org",
+    "name": "my-app-name",
+    "version": "1.0.0",
+    "server": "http://localhost:4001",
+    "inputs": {
+        "js": "./assets/scripts.js",
+        "css": "./assets/styles.css"
+    },
+    "development": {
+        "js": {
+            "defer": true,
+            "type": "module",
+            "value": "http://my-dev-assets/scripts.js"
+        },
+        "css": {
+            "rel": "stylesheet",
+            "type": "text/css",
+            "value": "http://my-dev-assets/styles.css"
+        }
+    }
+}

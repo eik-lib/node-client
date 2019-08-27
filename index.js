@@ -3,6 +3,7 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
 const pkgDir = require('pkg-dir');
+const { AssetJs, AssetCss } = require('@podium/utils');
 
 function validateMeta(meta) {
     if (!meta) throw new Error('invalid asset definition file');
@@ -36,33 +37,45 @@ module.exports = class Client {
 
         if (development && meta.development) {
             if (meta.development.js) {
-                this.scripts.push({
-                    type: 'esm',
-                    value: meta.development.js,
-                    development: true,
-                });
+                let script = {};
+                if (typeof meta.development.js !== 'string') {
+                    script = new AssetJs(meta.development.js);
+                } else {
+                    script = new AssetJs({
+                        type: 'module',
+                        value: meta.development.js,
+                    });
+                }
+
+                this.scripts.push(script);
             }
             if (meta.development.css) {
-                this.styles.push({
-                    type: 'default',
-                    value: meta.development.css,
-                    development: true,
-                });
+                let style = {};
+                if (typeof meta.development.css !== 'string') {
+                    style = new AssetCss(meta.development.css);
+                } else {
+                    style = new AssetCss({ value: meta.development.css });
+                }
+
+                this.styles.push(style);
             }
             return;
         }
 
         if (inputs.js) {
-            this.scripts.push({
-                value: `${server}/${organisation}/js/${name}/${version}/index.js`,
-                type: 'esm',
-            });
+            this.scripts.push(
+                new AssetJs({
+                    value: `${server}/${organisation}/js/${name}/${version}/index.js`,
+                    type: 'module',
+                })
+            );
         }
         if (inputs.css) {
-            this.styles.push({
-                type: 'default',
-                value: `${server}/${organisation}/css/${name}/${version}/index.css`,
-            });
+            this.styles.push(
+                new AssetCss({
+                    value: `${server}/${organisation}/css/${name}/${version}/index.css`,
+                })
+            );
         }
     }
 
