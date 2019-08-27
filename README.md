@@ -54,7 +54,7 @@ Creates a new instance of the client. Created instance have the accessor propert
 | development | switches the client between development and non development modes | boolean | false           | false    |
 | path        | modifies the default path to the `assets.json` meta file          | string  | `./assets.json` | false    |
 
-Example
+_Example_
 
 ```js
 const client = new Client({
