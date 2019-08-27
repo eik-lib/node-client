@@ -63,7 +63,7 @@ const client = new Client({
 });
 ```
 
-### instance.js
+### client.js
 
 Returns an array of JavaScript asset objects for the given mode (development or non development) based on values in `assets.json`
 
@@ -73,7 +73,7 @@ _Example_
 client.js; // [{ type: 'esm', value: 'http://<asset server>/finn/js/my-app/1.0.0/index.js' }]
 ```
 
-### instance.css
+### client.css
 
 Returns an array of CSS asset objects for the given mode (development or non development) based on values in `assets.json`
 
