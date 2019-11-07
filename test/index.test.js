@@ -8,7 +8,7 @@ test('development mode true - relative paths', t => {
         js: '/assets/scripts.js',
         css: '/assets/styles.css',
         path: './test/mocks/assets-1.json',
-        development: true
+        development: true,
     });
 
     t.same(
@@ -16,10 +16,10 @@ test('development mode true - relative paths', t => {
         [
             {
                 type: 'module',
-                value: '/assets/scripts.js'
-            }
+                value: '/assets/scripts.js',
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -27,10 +27,10 @@ test('development mode true - relative paths', t => {
             {
                 type: 'text/css',
                 value: '/assets/styles.css',
-                rel: 'stylesheet'
-            }
+                rel: 'stylesheet',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });
@@ -40,7 +40,7 @@ test('development mode true - absolute paths', t => {
         js: 'http://my-dev-assets/scripts.js',
         css: 'http://my-dev-assets/styles.css',
         path: './test/mocks/assets-1.json',
-        development: true
+        development: true,
     });
 
     t.same(
@@ -48,10 +48,10 @@ test('development mode true - absolute paths', t => {
         [
             {
                 type: 'module',
-                value: 'http://my-dev-assets/scripts.js'
-            }
+                value: 'http://my-dev-assets/scripts.js',
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -59,10 +59,10 @@ test('development mode true - absolute paths', t => {
             {
                 type: 'text/css',
                 value: 'http://my-dev-assets/styles.css',
-                rel: 'stylesheet'
-            }
+                rel: 'stylesheet',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });
@@ -72,7 +72,7 @@ test('development mode true, setting options from assets.json', t => {
         js: 'http://my-dev-assets/scripts.js',
         css: 'http://my-dev-assets/styles.css',
         path: './test/mocks/assets-2.json',
-        development: true
+        development: true,
     });
 
     t.same(
@@ -81,10 +81,10 @@ test('development mode true, setting options from assets.json', t => {
             {
                 value: 'http://my-dev-assets/scripts.js',
                 type: 'module',
-                defer: true
-            }
+                defer: true,
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -92,10 +92,10 @@ test('development mode true, setting options from assets.json', t => {
             {
                 value: 'http://my-dev-assets/styles.css',
                 type: 'text/css',
-                rel: 'stylesheet'
-            }
+                rel: 'stylesheet',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });
@@ -106,15 +106,15 @@ test('development mode true, overriding options', t => {
             value: 'http://my-dev-assets/scripts.js',
             type: 'iife',
             async: true,
-            defer: true
+            defer: true,
         },
         css: {
             value: 'http://my-dev-assets/styles.css',
             type: 'text/css',
-            title: 'some title'
+            title: 'some title',
         },
         path: './test/mocks/assets-2.json',
-        development: true
+        development: true,
     });
 
     t.same(
@@ -124,10 +124,10 @@ test('development mode true, overriding options', t => {
                 value: 'http://my-dev-assets/scripts.js',
                 type: 'iife',
                 defer: true,
-                async: true
-            }
+                async: true,
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -136,10 +136,10 @@ test('development mode true, overriding options', t => {
                 value: 'http://my-dev-assets/styles.css',
                 type: 'text/css',
                 rel: 'stylesheet',
-                title: 'some title'
-            }
+                title: 'some title',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });
@@ -147,7 +147,7 @@ test('development mode true, overriding options', t => {
 test('development mode false', t => {
     const c = new Client({
         path: './test/mocks/assets-1.json',
-        development: false
+        development: false,
     });
 
     t.same(
@@ -156,15 +156,15 @@ test('development mode false', t => {
             {
                 type: 'module',
                 value:
-                    'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js'
+                    'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js',
             },
             {
                 type: 'iife',
                 value:
-                    'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js'
-            }
+                    'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js',
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -173,10 +173,10 @@ test('development mode false', t => {
                 type: 'text/css',
                 value:
                     'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.css',
-                rel: 'stylesheet'
-            }
+                rel: 'stylesheet',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });
@@ -184,7 +184,7 @@ test('development mode false', t => {
 test('development mode false, setting options', t => {
     const c = new Client({
         path: './test/mocks/assets-3.json',
-        development: false
+        development: false,
     });
 
     t.same(
@@ -195,17 +195,17 @@ test('development mode false, setting options', t => {
                     'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js',
                 async: true,
                 defer: true,
-                type: 'module'
+                type: 'module',
             },
             {
                 value:
                     'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js',
                 async: true,
                 defer: true,
-                type: 'iife'
-            }
+                type: 'iife',
+            },
         ],
-        'client.js should return JS assets object'
+        'client.js should return JS assets object',
     );
     t.same(
         JSON.parse(JSON.stringify(c.css)),
@@ -215,10 +215,10 @@ test('development mode false, setting options', t => {
                 value:
                     'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.css',
                 type: 'text/css',
-                rel: 'stylesheet'
-            }
+                rel: 'stylesheet',
+            },
         ],
-        'client.css should return CSS assets object'
+        'client.css should return CSS assets object',
     );
     t.end();
 });

@@ -24,7 +24,7 @@ function readAssetsJson(path) {
 
 module.exports = class Client {
     constructor({ js, css, development = false, path = './assets.json' }) {
-        let meta = readAssetsJson(path);
+        const meta = readAssetsJson(path);
 
         const {
             server,
@@ -32,7 +32,7 @@ module.exports = class Client {
             css: { input: cssInput, options: cssOptions },
             organisation,
             name,
-            version
+            version,
         } = meta;
         this.scripts = [];
         this.styles = [];
@@ -46,7 +46,7 @@ module.exports = class Client {
                     script = new AssetJs({
                         type: 'module',
                         value: js,
-                        ...jsOptions
+                        ...jsOptions,
                     });
                 }
 
@@ -70,23 +70,23 @@ module.exports = class Client {
                 new AssetJs({
                     type: 'module',
                     ...jsOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`
-                })
+                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`,
+                }),
             );
             this.scripts.push(
                 new AssetJs({
                     ...jsOptions,
                     type: 'iife',
-                    value: `${server}/${organisation}/pkg/${name}/${version}/ie11/index.js`
-                })
+                    value: `${server}/${organisation}/pkg/${name}/${version}/ie11/index.js`,
+                }),
             );
         }
         if (cssInput) {
             this.styles.push(
                 new AssetCss({
                     ...cssOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`
-                })
+                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`,
+                }),
             );
         }
     }
