@@ -67,7 +67,7 @@ test('development mode true - absolute paths', t => {
     t.end();
 });
 
-test('development mode true, setting options', t => {
+test('development mode true, setting options from assets.json', t => {
     const c = new Client({
         js: 'http://my-dev-assets/scripts.js',
         css: 'http://my-dev-assets/styles.css',
@@ -93,6 +93,50 @@ test('development mode true, setting options', t => {
                 value: 'http://my-dev-assets/styles.css',
                 type: 'text/css',
                 rel: 'stylesheet'
+            }
+        ],
+        'client.css should return CSS assets object'
+    );
+    t.end();
+});
+
+test('development mode true, overriding options', t => {
+    const c = new Client({
+        js: {
+            value: 'http://my-dev-assets/scripts.js',
+            type: 'iife',
+            async: true,
+            defer: true
+        },
+        css: {
+            value: 'http://my-dev-assets/styles.css',
+            type: 'text/css',
+            title: 'some title'
+        },
+        path: './test/mocks/assets-2.json',
+        development: true
+    });
+
+    t.same(
+        JSON.parse(JSON.stringify(c.js)),
+        [
+            {
+                value: 'http://my-dev-assets/scripts.js',
+                type: 'iife',
+                defer: true,
+                async: true
+            }
+        ],
+        'client.js should return JS assets object'
+    );
+    t.same(
+        JSON.parse(JSON.stringify(c.css)),
+        [
+            {
+                value: 'http://my-dev-assets/styles.css',
+                type: 'text/css',
+                rel: 'stylesheet',
+                title: 'some title'
             }
         ],
         'client.css should return CSS assets object'
