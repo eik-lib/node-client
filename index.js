@@ -6,6 +6,9 @@ const pkgDir = require('pkg-dir');
 const { AssetJs, AssetCss } = require('@podium/utils');
 const { schemas } = require('@asset-pipe/common');
 
+const scripts = Symbol('assets:scripts');
+const styles = Symbol('assets:styles');
+
 function validateMeta(meta) {
     const { value, error } = schemas.assets(meta);
 
@@ -34,8 +37,8 @@ module.exports = class Client {
             name,
             version,
         } = meta;
-        this._scripts = [];
-        this._styles = [];
+        this[scripts] = [];
+        this[styles] = [];
 
         if (development) {
             if (js) {
@@ -50,7 +53,7 @@ module.exports = class Client {
                     });
                 }
 
-                this._scripts.push(script);
+                this[scripts].push(script);
             }
             if (css) {
                 let style = {};
@@ -60,20 +63,20 @@ module.exports = class Client {
                     style = new AssetCss({ value: css, ...cssOptions });
                 }
 
-                this._styles.push(style);
+                this[styles].push(style);
             }
             return;
         }
 
         if (jsInput) {
-            this._scripts.push(
+            this[scripts].push(
                 new AssetJs({
                     type: 'module',
                     ...jsOptions,
                     value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`,
                 }),
             );
-            this._scripts.push(
+            this[scripts].push(
                 new AssetJs({
                     ...jsOptions,
                     type: 'iife',
@@ -82,7 +85,7 @@ module.exports = class Client {
             );
         }
         if (cssInput) {
-            this._styles.push(
+            this[styles].push(
                 new AssetCss({
                     ...cssOptions,
                     value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`,
@@ -92,11 +95,11 @@ module.exports = class Client {
     }
 
     get js() {
-        return this._scripts;
+        return this[scripts];
     }
 
     get css() {
-        return this._styles;
+        return this[styles];
     }
 
     get scripts() {
