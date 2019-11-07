@@ -3,7 +3,39 @@
 const { test } = require('tap');
 const Client = require('../');
 
-test('development mode true', t => {
+test('development mode true - relative paths', t => {
+    const c = new Client({
+        js: '/assets/scripts.js',
+        css: '/assets/styles.css',
+        path: './test/mocks/assets-1.json',
+        development: true
+    });
+
+    t.same(
+        JSON.parse(JSON.stringify(c.js)),
+        [
+            {
+                type: 'module',
+                value: '/assets/scripts.js'
+            }
+        ],
+        'client.js should return JS assets object'
+    );
+    t.same(
+        JSON.parse(JSON.stringify(c.css)),
+        [
+            {
+                type: 'text/css',
+                value: '/assets/styles.css',
+                rel: 'stylesheet'
+            }
+        ],
+        'client.css should return CSS assets object'
+    );
+    t.end();
+});
+
+test('development mode true - absolute paths', t => {
     const c = new Client({
         js: 'http://my-dev-assets/scripts.js',
         css: 'http://my-dev-assets/styles.css',
