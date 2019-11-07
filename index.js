@@ -73,14 +73,32 @@ module.exports = class Client {
                 new AssetJs({
                     type: 'module',
                     ...jsOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/main/index.js`,
+                        ),
                 }),
             );
             this[scripts].push(
                 new AssetJs({
                     ...jsOptions,
                     type: 'iife',
-                    value: `${server}/${organisation}/pkg/${name}/${version}/ie11/index.js`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/ie11/index.js`,
+                        ),
                 }),
             );
         }
@@ -88,7 +106,16 @@ module.exports = class Client {
             this[styles].push(
                 new AssetCss({
                     ...cssOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/main/index.css`,
+                        ),
                 }),
             );
         }
