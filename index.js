@@ -4,22 +4,16 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 const pkgDir = require('pkg-dir');
 const { AssetJs, AssetCss } = require('@podium/utils');
+const { schemas } = require('@asset-pipe/common');
 
 function validateMeta(meta) {
-    if (!meta) throw new Error('invalid asset definition file');
-    if (!meta.server)
-        throw new Error('asset definition file missing required key "server"');
-    if (!meta.inputs)
-        throw new Error('asset definition file missing required key "inputs"');
-    if (!meta.name)
-        throw new Error('asset definition file missing required key "name"');
-    if (!meta.version)
-        throw new Error('asset definition file missing required key "version"');
-    if (!meta.organisation)
-        throw new Error(
-            'asset definition file missing required key "organisation"'
-        );
-    return meta;
+    const { value, error } = schemas.assets(meta);
+
+    if (error) {
+        throw new Error(error);
+    }
+
+    return value;
 }
 
 function readAssetsJson(path) {
@@ -29,39 +23,41 @@ function readAssetsJson(path) {
 }
 
 module.exports = class Client {
-    constructor({ development = false, path = './assets.json' }) {
+    constructor({ js, css, development = false, path = './assets.json' }) {
         let meta = readAssetsJson(path);
+
         const {
             server,
-            inputs,
+            js: { input: jsInput, options: jsOptions },
+            css: { input: cssInput, options: cssOptions },
             organisation,
             name,
-            version,
-            tagOptions = {},
+            version
         } = meta;
         this.scripts = [];
         this.styles = [];
 
-        if (development && meta.development) {
-            if (meta.development.js) {
+        if (development) {
+            if (js) {
                 let script = {};
-                if (typeof meta.development.js !== 'string') {
-                    script = new AssetJs(meta.development.js);
+                if (typeof js !== 'string') {
+                    script = new AssetJs(js);
                 } else {
                     script = new AssetJs({
                         type: 'module',
-                        value: meta.development.js,
+                        value: js,
+                        ...jsOptions
                     });
                 }
 
                 this.scripts.push(script);
             }
-            if (meta.development.css) {
+            if (css) {
                 let style = {};
-                if (typeof meta.development.css !== 'string') {
-                    style = new AssetCss(meta.development.css);
+                if (typeof css !== 'string') {
+                    style = new AssetCss(css);
                 } else {
-                    style = new AssetCss({ value: meta.development.css });
+                    style = new AssetCss({ value: css, ...cssOptions });
                 }
 
                 this.styles.push(style);
@@ -69,20 +65,27 @@ module.exports = class Client {
             return;
         }
 
-        if (inputs.js) {
+        if (jsInput) {
             this.scripts.push(
                 new AssetJs({
-                    ...tagOptions.js,
-                    value: `${server}/${organisation}/js/${name}/${version}/index.js`,
                     type: 'module',
+                    ...jsOptions,
+                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`
+                })
+            );
+            this.scripts.push(
+                new AssetJs({
+                    ...jsOptions,
+                    type: 'iife',
+                    value: `${server}/${organisation}/pkg/${name}/${version}/ie11/index.js`
                 })
             );
         }
-        if (inputs.css) {
+        if (cssInput) {
             this.styles.push(
                 new AssetCss({
-                    ...tagOptions.css,
-                    value: `${server}/${organisation}/css/${name}/${version}/index.css`,
+                    ...cssOptions,
+                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`
                 })
             );
         }
