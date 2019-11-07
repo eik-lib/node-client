@@ -6,6 +6,9 @@ const pkgDir = require('pkg-dir');
 const { AssetJs, AssetCss } = require('@podium/utils');
 const { schemas } = require('@asset-pipe/common');
 
+const scripts = Symbol('assets:scripts');
+const styles = Symbol('assets:styles');
+
 function validateMeta(meta) {
     const { value, error } = schemas.assets(meta);
 
@@ -34,8 +37,8 @@ module.exports = class Client {
             name,
             version,
         } = meta;
-        this.scripts = [];
-        this.styles = [];
+        this[scripts] = [];
+        this[styles] = [];
 
         if (development) {
             if (js) {
@@ -50,7 +53,7 @@ module.exports = class Client {
                     });
                 }
 
-                this.scripts.push(script);
+                this[scripts].push(script);
             }
             if (css) {
                 let style = {};
@@ -60,42 +63,77 @@ module.exports = class Client {
                     style = new AssetCss({ value: css, ...cssOptions });
                 }
 
-                this.styles.push(style);
+                this[styles].push(style);
             }
             return;
         }
 
         if (jsInput) {
-            this.scripts.push(
+            this[scripts].push(
                 new AssetJs({
                     type: 'module',
                     ...jsOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.js`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/main/index.js`,
+                        ),
                 }),
             );
-            this.scripts.push(
+            this[scripts].push(
                 new AssetJs({
                     ...jsOptions,
                     type: 'iife',
-                    value: `${server}/${organisation}/pkg/${name}/${version}/ie11/index.js`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/ie11/index.js`,
+                        ),
                 }),
             );
         }
         if (cssInput) {
-            this.styles.push(
+            this[styles].push(
                 new AssetCss({
                     ...cssOptions,
-                    value: `${server}/${organisation}/pkg/${name}/${version}/main/index.css`,
+                    value:
+                        server +
+                        join(
+                            '/',
+                            organisation,
+                            'pkg',
+                            name,
+                            version,
+                            `/main/index.css`,
+                        ),
                 }),
             );
         }
     }
 
     get js() {
-        return this.scripts;
+        return this[scripts];
     }
 
     get css() {
-        return this.styles;
+        return this[styles];
+    }
+
+    get scripts() {
+        return this.js.map(s => s.toHTML()).join('\n');
+    }
+
+    get styles() {
+        return this.css.map(s => s.toHTML()).join('\n');
     }
 };

@@ -88,7 +88,7 @@ _Example: Setup when using Webpack dev server_
 ```js
 const client = new Client({
     js: 'http://localhost:8080/scripts.bundle.js',
-    development: true
+    development: true,
 });
 ```
 
@@ -130,7 +130,7 @@ const client = new Client({
     path: './some/other/assets.json',
     development: true,
     js: '/assets/scripts.js',
-    css: '/assets/styles.css'
+    css: '/assets/styles.css',
 });
 ```
 
@@ -140,7 +140,7 @@ _Example_
 const client = new Client({
     development: true,
     js: { value: '/assets/scripts.js', type: 'module', async: true },
-    css: { value: '/assets/styles.css', type: 'text/css' }
+    css: { value: '/assets/styles.css', type: 'text/css' },
 });
 ```
 
@@ -172,4 +172,27 @@ client.css; // [{ type: 'default', value: 'http://<asset server>/finn/css/my-app
 
 ```js
 client.css[0].toHTML(); // <link type="text/stylesheet" rel="stylesheet" href="http://<asset server>/finn/css/my-app/1.0.0/index.css">
+```
+
+### client.scripts
+
+Returns JavaScript script tag markup for the given mode (development or non development) based on values in `assets.json`
+
+_Examples_
+
+```js
+client.scripts;
+// <script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js" type="module"></script>
+// <script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js"></script>`
+```
+
+### client.styles
+
+Returns CSS link tag markup for the given mode (development or non development) based on values in `assets.json`
+
+_Examples_
+
+```js
+client.styles;
+// <link href="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.css" type="text/css" rel="stylesheet">
 ```

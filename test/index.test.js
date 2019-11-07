@@ -222,3 +222,23 @@ test('development mode false, setting options', t => {
     );
     t.end();
 });
+
+test('development mode false, scripts and styles', t => {
+    const c = new Client({
+        path: './test/mocks/assets-1.json',
+        development: false,
+    });
+
+    t.same(
+        JSON.parse(JSON.stringify(c.scripts)),
+        `<script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js" type="module"></script>
+<script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js"></script>`,
+        'client.scripts should return JS scripts markup',
+    );
+    t.same(
+        JSON.parse(JSON.stringify(c.styles)),
+        `<link href="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.css" type="text/css" rel="stylesheet">`,
+        'client.styles should return CSS styles markup',
+    );
+    t.end();
+});
