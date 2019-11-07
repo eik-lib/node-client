@@ -3,26 +3,19 @@
     "name": "my-app-name",
     "version": "1.0.0",
     "server": "http://localhost:4001",
-    "inputs": {
-        "js": "./assets/scripts.js",
-        "css": "./assets/styles.css"
-    },
-    "tagOptions": {
-        "js": {
+    "js": {
+        "input": "./assets/scripts.js",
+        "options": {
             "defer": true,
-            "async": true
-        },
-        "css": {
-            "title": "my title"
-        }
-    },
-    "development": {
-        "js": {
-            "defer": true,
+            "async": true,
             "type": "module",
             "value": "http://my-dev-assets/scripts.js"
-        },
-        "css": {
+        }
+    },
+    "css": {
+        "input": "./assets/styles.css",
+        "options": {
+            "title": "my title",
             "rel": "stylesheet",
             "type": "text/css",
             "value": "http://my-dev-assets/styles.css"

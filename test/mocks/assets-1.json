@@ -3,12 +3,10 @@
     "name": "my-app-name",
     "version": "1.0.0",
     "server": "http://localhost:4001",
-    "inputs": {
-        "js": "./assets/scripts.js",
-        "css": "./assets/styles.css"
+    "js": {
+        "input": "./assets/scripts.js"
     },
-    "development": {
-        "js": "http://my-dev-assets/scripts.js",
-        "css": "http://my-dev-assets/styles.css"
+    "css": {
+        "input": "./assets/styles.css"
     }
 }
