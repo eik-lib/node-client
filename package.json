@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@asset-pipe/common": "^4.0.0-alpha.4",
-    "@podium/utils": "^4.1.0",
+    "@podium/utils": "^4.1.1",
     "pkg-dir": "^4.2.0"
   },
   "devDependencies": {
