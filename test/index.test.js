@@ -162,6 +162,7 @@ test('development mode false', t => {
                 type: 'iife',
                 value:
                     'http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js',
+                nomodule: true,
             },
         ],
         'client.js should return JS assets object',
@@ -203,6 +204,7 @@ test('development mode false, setting options', t => {
                 async: true,
                 defer: true,
                 type: 'iife',
+                nomodule: true,
             },
         ],
         'client.js should return JS assets object',
@@ -232,7 +234,7 @@ test('development mode false, scripts and styles', t => {
     t.same(
         JSON.parse(JSON.stringify(c.scripts)),
         `<script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js" type="module"></script>
-<script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js"></script>`,
+<script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js" nomodule></script>`,
         'client.scripts should return JS scripts markup',
     );
     t.same(

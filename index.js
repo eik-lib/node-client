@@ -89,6 +89,7 @@ module.exports = class Client {
                 new AssetJs({
                     ...jsOptions,
                     type: 'iife',
+                    nomodule: true,
                     value:
                         server +
                         join(
