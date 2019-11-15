@@ -4,7 +4,7 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 const pkgDir = require('pkg-dir');
 const { AssetJs, AssetCss } = require('@podium/utils');
-const { schemas } = require('@asset-pipe/common');
+const { schemas } = require('@eik/common');
 
 const scripts = Symbol('assets:scripts');
 const styles = Symbol('assets:styles');

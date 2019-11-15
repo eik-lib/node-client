@@ -1,12 +1,12 @@
-# Asset Pipe Node Client
+# Eik Node Client
 
-The Asset Pipe Node.js client facilitates switching between local and production assets in Node.js apps based on values
+The Eik Node.js client facilitates switching between local and production assets in Node.js apps based on values
 provided by an `assets.json` metafile.
 
 ## Install
 
 ```sh
-npm install @asset-pipe/node-client
+npm install @eik/node-client
 ```
 
 ## Basic usage
@@ -14,7 +14,7 @@ npm install @asset-pipe/node-client
 ### include the client in your node apps
 
 ```js
-const Client = require('@asset-pipe/node-client');
+const Client = require('@eik/node-client');
 ```
 
 ### in production mode the client will build an object pointing to production assets
