@@ -6,7 +6,7 @@ provided by an `assets.json` metafile.
 ## Install
 
 ```sh
-npm install @eik/node-client
+npm install @eik/client
 ```
 
 ## Basic usage
@@ -14,7 +14,7 @@ npm install @eik/node-client
 ### include the client in your node apps
 
 ```js
-const Client = require('@eik/node-client');
+const Client = require('@eik/client');
 ```
 
 ### in production mode the client will build an object pointing to production assets

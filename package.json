@@ -1,5 +1,5 @@
 {
-  "name": "@eik/node-client",
+  "name": "@eik/client",
   "version": "1.0.0-alpha.1",
   "description": "Node.js client for Eik",
   "main": "index.js",
