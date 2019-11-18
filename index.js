@@ -27,7 +27,14 @@ function readAssetsJson(path) {
 
 module.exports = class Client {
     constructor({ js, css, development = false, path = './assets.json' }) {
-        const meta = readAssetsJson(path);
+        this[scripts] = [];
+        this[styles] = [];
+
+        try {
+            this.meta = readAssetsJson(path);
+        } catch (err) {
+            this.meta = { js: {}, css: {} };
+        }
 
         const {
             server,
@@ -36,9 +43,7 @@ module.exports = class Client {
             organisation,
             name,
             version,
-        } = meta;
-        this[scripts] = [];
-        this[styles] = [];
+        } = this.meta;
 
         if (development) {
             if (js) {

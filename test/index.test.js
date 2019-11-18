@@ -244,3 +244,16 @@ test('development mode false, scripts and styles', t => {
     );
     t.end();
 });
+
+test('development mode true, assets.json not required', t => {
+    const c = new Client({
+        js: '/js',
+        css: '/css',
+        development: true,
+    });
+
+    t.equals(c.js[0].value, '/js', 'client.js should return JS path');
+    t.equals(c.css[0].value, '/css', 'client.css should return CSS path');
+
+    t.end();
+});
