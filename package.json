@@ -14,7 +14,7 @@
   "dependencies": {
     "@eik/common": "^1.0.0-alpha.1",
     "@podium/utils": "^4.1.2",
-    "pkg-dir": "^4.2.0"
+    "pkg-dir": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
