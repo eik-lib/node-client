@@ -1,11 +1,6 @@
 name: Run Lint and Tests
 
-on: 
-  push:
-    branches-ignore:
-      - master
-      - alpha
-      - beta
+on: push
 
 jobs:
   build:
@@ -23,15 +18,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-        env:
-          CI: true
       - name: npm lint
         run: |
           npm run lint
-        env:
-          CI: true
-      - name: npm test
+      - name: Run tests
         run: |
-          npm run test:ci
-        env:
-          CI: true
+          npm test
