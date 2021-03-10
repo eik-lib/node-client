@@ -1,11 +1,11 @@
 import { helpers } from '@eik/common';
 import { join } from 'path';
 
-const isUrl = (value = '') => value.startsWith('http')
+const isUrl = (value = '') => value.startsWith('http');
 
 export default class EikNodeClient {
-    constructor({ 
-        development = false, 
+    constructor({
+        development = false,
         base = '',
         path = process.cwd(),
 
@@ -55,4 +55,4 @@ export default class EikNodeClient {
         }
         return new URL(join(this.pathname, file), this.server).href;
     }
-};
+}
