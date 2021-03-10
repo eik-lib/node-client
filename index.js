@@ -1,140 +1,58 @@
-'use strict';
+import { helpers } from '@eik/common';
+import { join } from 'path';
 
-const { readFileSync } = require('fs');
-const { join } = require('path');
-const pkgDir = require('pkg-dir');
-const { AssetJs, AssetCss } = require('@podium/utils');
-const { schemas } = require('@eik/common');
+const isUrl = (value = '') => value.startsWith('http')
 
-const scripts = Symbol('assets:scripts');
-const styles = Symbol('assets:styles');
+export default class EikNodeClient {
+    constructor({ 
+        development = false, 
+        base = '',
+        path = process.cwd(),
 
-function validateMeta(meta) {
-    const { value, error } = schemas.assets(meta);
-
-    if (error) {
-        throw new Error(error);
+    } = {}) {
+        this.pDevelopment = development;
+        this.pConfig = {};
+        this.pPath = path;
+        this.pBase = base;
     }
 
-    return value;
-}
+    async load() {
+        this.pConfig = await helpers.getDefaults(this.pPath);
+    }
 
-function readAssetsJson(path) {
-    const metaPath = join(pkgDir.sync(), path);
-    const metaString = readFileSync(metaPath, 'utf8');
-    return validateMeta(JSON.parse(metaString));
-}
+    get name() {
+        if (this.pConfig.name) return this.pConfig.name;
+        return '';
+    }
 
-module.exports = class Client {
-    constructor({ js, css, development = false, path = './assets.json' }) {
-        const meta = readAssetsJson(path);
+    get version() {
+        if (this.pConfig.version) return this.pConfig.version;
+        return '';
+    }
 
-        const {
-            server,
-            js: { input: jsInput, options: jsOptions },
-            css: { input: cssInput, options: cssOptions },
-            organisation,
-            name,
-            version,
-        } = meta;
-        this[scripts] = [];
-        this[styles] = [];
+    get type() {
+        if (this.pConfig.type && this.pConfig.type === 'package') return 'pkg';
+        if (this.pConfig.type) return this.pConfig.type;
+        return '';
+    }
 
-        if (development) {
-            if (js) {
-                let script = {};
-                if (typeof js !== 'string') {
-                    script = new AssetJs(js);
-                } else {
-                    script = new AssetJs({
-                        type: 'module',
-                        value: js,
-                        ...jsOptions,
-                    });
-                }
+    get server() {
+        if (this.pConfig.server) return this.pConfig.server;
+        return '';
+    }
 
-                this[scripts].push(script);
+    get pathname() {
+        return join('/', this.type, this.name, this.version);
+    }
+
+    file(file = '') {
+        if (this.pDevelopment) {
+            if (isUrl(this.pBase)) {
+                const base = new URL(this.pBase);
+                return new URL(join(base.pathname, file), base).href;
             }
-            if (css) {
-                let style = {};
-                if (typeof css !== 'string') {
-                    style = new AssetCss(css);
-                } else {
-                    style = new AssetCss({ value: css, ...cssOptions });
-                }
-
-                this[styles].push(style);
-            }
-            return;
+            return join(this.pBase, file);
         }
-
-        if (jsInput) {
-            this[scripts].push(
-                new AssetJs({
-                    type: 'module',
-                    ...jsOptions,
-                    value:
-                        server +
-                        join(
-                            '/',
-                            organisation,
-                            'pkg',
-                            name,
-                            version,
-                            `/main/index.js`,
-                        ),
-                }),
-            );
-            this[scripts].push(
-                new AssetJs({
-                    ...jsOptions,
-                    type: 'iife',
-                    nomodule: true,
-                    value:
-                        server +
-                        join(
-                            '/',
-                            organisation,
-                            'pkg',
-                            name,
-                            version,
-                            `/ie11/index.js`,
-                        ),
-                }),
-            );
-        }
-        if (cssInput) {
-            this[styles].push(
-                new AssetCss({
-                    ...cssOptions,
-                    value:
-                        server +
-                        join(
-                            '/',
-                            organisation,
-                            'pkg',
-                            name,
-                            version,
-                            `/main/index.css`,
-                        ),
-                }),
-            );
-        }
-    }
-
-    get js() {
-        return this[scripts];
-    }
-
-    get css() {
-        return this[styles];
-    }
-
-    get scripts() {
-        return this.js.map(s => s.toHTML()).join('\n');
-    }
-
-    get styles() {
-        return this.css.map(s => s.toHTML()).join('\n');
+        return new URL(join(this.pathname, file), this.server).href;
     }
 };
