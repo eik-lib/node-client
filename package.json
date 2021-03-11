@@ -3,17 +3,24 @@
   "version": "1.0.0-next.2",
   "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
-  "main": "src/index.js",
+  "main": "./dist/index.cjs",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./dist/index.cjs"
+  },
   "files": [
     "CHANGELOG.md",
     "package.json",
     "LICENSE",
+    "dist",
     "src"
   ],
   "scripts": {
     "test": "tap --no-esm test/*.js --no-coverage",
     "lint:fix": "eslint --fix .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "npm run -s build",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -46,6 +53,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
     "prettier": "2.2.1",
+    "rollup": "2.40.0",
     "semantic-release": "17.4.1",
     "tap": "14.11.0"
   }
