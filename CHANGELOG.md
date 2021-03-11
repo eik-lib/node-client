@@ -1,3 +1,10 @@
+# [1.0.0-next.3](https://github.com/eik-lib/node-client/compare/v1.0.0-next.2...v1.0.0-next.3) (2021-03-11)
+
+
+### Bug Fixes
+
+* Add CommonJS support ([b634537](https://github.com/eik-lib/node-client/commit/b6345378236d1bf60dc1ff6ceee1a285ca335e7f))
+
 # [1.0.0-next.2](https://github.com/eik-lib/node-client/compare/v1.0.0-next.1...v1.0.0-next.2) (2021-03-10)
 
 
