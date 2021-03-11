@@ -1,5 +1,5 @@
 import tap from 'tap';
-import EikNodeClient from '../index.js';
+import EikNodeClient from '../src/index.js';
 
 tap.test('test', async (t) => {
     const client = new EikNodeClient({

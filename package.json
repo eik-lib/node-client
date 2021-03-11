@@ -1,17 +1,34 @@
 {
   "name": "@eik/node-client",
   "version": "1.0.0-next.2",
-  "description": "Node.js client for Eik",
+  "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
+  "files": [
+    "CHANGELOG.md",
+    "package.json",
+    "LICENSE",
+    "src"
+  ],
   "scripts": {
     "test": "tap --no-esm test/*.js --no-coverage",
     "lint:fix": "eslint --fix .",
     "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eik-lib/rollup-plugin.git"
+  },
+  "keywords": [
+    "eik",
+    "esm"
+  ],
+  "author": "Finn.no",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eik-lib/node-client/issues"
+  },
+  "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
     "@eik/common": "4.0.0-next.4",
     "abslog": "2.4.0"
