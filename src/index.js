@@ -22,7 +22,7 @@ const fetchImportMaps = async (urls = []) => {
             `Unable to load import map file from server: ${err.message}`,
         );
     }
-}
+};
 
 export default class EikNodeClient {
     constructor({
@@ -37,7 +37,7 @@ export default class EikNodeClient {
         this.pMaps = [];
     }
 
-    async load({ 
+    async load({
         maps = false,
     } = {}) {
         this.pConfig = await helpers.getDefaults(this.pPath);
