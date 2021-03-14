@@ -1,23 +1,49 @@
 import { helpers } from '@eik/common';
 import { join } from 'path';
+import fetch from 'node-fetch';
 
 const isUrl = (value = '') => value.startsWith('http');
+
+const fetchImportMaps = async (urls = []) => {
+    try {
+        const maps = urls.map((map) => fetch(map).then((result) => {
+            if (result.status === 404) {
+                throw new Error('Import map could not be found on server');
+            } else if (result.status >= 400 && result.status < 500) {
+                throw new Error('Server rejected client request');
+            } else if (result.status >= 500) {
+                throw new Error('Server error');
+            }
+            return result.json();
+        }));
+        return await Promise.all(maps);
+    } catch (err) {
+        throw new Error(
+            `Unable to load import map file from server: ${err.message}`,
+        );
+    }
+}
 
 export default class EikNodeClient {
     constructor({
         development = false,
         base = '',
         path = process.cwd(),
-
     } = {}) {
         this.pDevelopment = development;
         this.pConfig = {};
         this.pPath = path;
         this.pBase = base;
+        this.pMaps = [];
     }
 
-    async load() {
+    async load({ 
+        maps = false,
+    } = {}) {
         this.pConfig = await helpers.getDefaults(this.pPath);
+        if (maps) {
+            this.pMaps = await fetchImportMaps(this.pConfig.map);
+        }
     }
 
     get name() {
@@ -54,5 +80,9 @@ export default class EikNodeClient {
             return join(this.pBase, file);
         }
         return new URL(join(this.pathname, file), this.server).href;
+    }
+
+    maps() {
+        return this.pMaps;
     }
 }

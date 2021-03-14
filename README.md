@@ -1,198 +1,145 @@
-# Eik Node Client
+# @eik/node-client
 
-The Eik Node.js client facilitates switching between local and production assets in Node.js apps based on values
-provided by an `assets.json` metafile.
+The Eik Node.js client facilitates loading Eik config and providing URLs to assets on an Eik server or in local development plus loading import maps from the Eik server.
 
 ## Install
 
 ```sh
-npm install @eik/client
+npm install @eik/node-client
 ```
 
 ## Basic usage
 
-### include the client in your node apps
-
 ```js
-const Client = require('@eik/client');
-```
+import EikNodeClient from '@eik/node-client';
 
-### in production mode the client will build an object pointing to production assets
-
-The client will read your local `assets.json` file and build a object based on the values found therein.
-
-```js
-const client = new Client();
-
-// client.js will be an object of the form:
-/* 
-[
-    { type: 'module', value: 'http://<asset server>/finn/js/my-app/1.0.0/main/index.js' },
-    { type: 'iife', value: 'http://<asset server>/finn/js/my-app/1.0.0/ie11/index.js' },
-]
-*/
-
-// client.css will be an object of the form:
-/*
-[
-    { type: 'text/css', value: 'http://<asset server>/finn/css/my-app/1.0.0/index.css' }
-]
-*/
-```
-
-In both cases, each object in the array also has a `toHTML()` method that can be used to render out the appropriate HTML tag
-for the object.
-
-```js
-const client = new Client();
-
-client.js[0].toHTML();
-// <script type="module" src="http://<asset server>/finn/js/my-app/1.0.0/main/index.js"><script>
-
-client.js[1].toHTML();
-// <script src="http://<asset server>/finn/js/my-app/1.0.0/ie11/index.js"><script>
-
-client.css[0].toHTML();
-// <link rel="stylesheet" type="text/css" href="http://<asset server>/finn/js/my-app/1.0.0/main/index.css">
-```
-
-### in development mode the client will build an object pointing to development assets provided
-
-```js
-const client = new Client({ js: '/assets/scripts.js', css: '/assets/styles.css' development: true });
-
-// client.js will be an array of the form [{ type: 'module', value: '/assets/script.js' }]
-// client.css will be an array of the form [{ type: 'text/css', value: '/assets/styles.css' }]
-```
-
-It's up to you to make sure that these assets are available to the app.
-In an express app you might use `express-static` to serve the assets with your app
-
-_Example: Express app using express-static_
-
-```js
-app.use('/assets', express.static('assets'));
-
-const client = new Client({
-    js: '/assets/scripts.js',
-    css: '/assets/styles.css'
-    development: true
+const client = new EikNodeClient({
+    development: false,
+    base: '/public'
 });
+
+await client.load({
+    maps: true,
+});
+
+client.file('/a-script-file.js')
+client.maps()
 ```
 
-Or you might use webpack or some other bundling system that can also serve the assets in development mode for you
-(remembering to set appropriate CORS headers)
+## Description
 
-_Example: Setup when using Webpack dev server_
+This module will load a Eik config from either a `eik.json` or a `package.json` and based on the information in the config provide absolute URLs to assets on a Eik server. In addition to this its possible to set a `base` URL which will be used as the "base root" for files when this module is set in development mode. This makes it easy to retrieve absolute URLs to assets on a Eik server when an application is running in production but also get URLs to the same assets when developing.
+
+In addition this module can also download the import maps defined in a Eik config and provide these for inclusion in an application.
+
+The following will use the information in a Eik config and provide an absolute URL to a file on a Eik server:
 
 ```js
-const client = new Client({
-    js: 'http://localhost:8080/scripts.bundle.js',
+import EikNodeClient from '@eik/node-client';
+
+const client = new EikNodeClient({
+    development: false,
+    base: 'http://localhost:8080/public'        
+});
+
+await client.load();
+
+// Will ex output: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js
+client.file('/path/script.js')
+```
+
+The following is the same as above but in development mode. The output will then be based on the vaule set for `base`:
+
+```js
+import EikNodeClient from '@eik/node-client';
+
+const client = new EikNodeClient({
     development: true,
+    base: 'http://localhost:8080/public'        
 });
+
+await client.load();
+
+// Will output: http://localhost:8080/public/path/script.js
+client.file('/path/script.js')
 ```
 
-Or you might just use an HTTP server to serve your files on a port such as `4000`. (remembering to set appropriate CORS headers)
+## Constructor
 
-_Example: Setup when using a standalone web server_
+Create a new Layout instance.
 
 ```js
-const client = new Client({
-    js: 'http://localhost:4000/assets/scripts.js',
-    css: 'http://localhost:4000/assets/styles.css'
-    development: true
-});
+const client = new EikNodeClient(options);
 ```
+
+### options
+
+| option      | default         | type      | required | details                                                                       |
+| ----------- | --------------- | --------- | -------- | ----------------------------------------------------------------------------- |
+| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing a eik.json file or package.json with eik config. |
+| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                |
+| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                    |
+
+#### path
+
+Path to directory containing a eik.json file or package.json with eik config.
+
+#### base
+
+Base root to be used for returned asset files. Can be both an absolute URL or relative URL. Will only be applied when the module are in development mode.
+
+#### development
+
+Set the module in development mode or not.
 
 ## API
 
-### Client
+This module has the following API
 
-```js
-new Client(opts);
-```
+### async .load(options)
 
-Creates a new instance of the client. Created instance have the accessor properties `.js` and `.css` as described below.
+Loads Eik config, and the configs import maps if set to, into the module. Once loaded both the config and import maps will be cached in the module.
 
-#### opts
+#### options
 
-| name        | description                                                                                                                            | type            | default         | required |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------- | -------- |
-| development | switches the client between development and non development modes                                                                      | `boolean`       | `false`         | `false`  |
-| path        | modifies the default path to the `assets.json` meta file                                                                               | `string`        | `./assets.json` | `false`  |
-| js          | URL or path to location of JavaScript assets to be used in development mode. An object can also be passed for additional configuration | `string|object` |                 | `false`  |
-| css         | URL or path to location of CSS assets to be used in development mode. An object can also be passed for additional configuration        | `string|object` |                 | `false`  |
+| option      | default         | type       | required | details                                                                          |
+| ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
+| maps        | `false`         | `boolean`  | `false`  | I import maps defined in the config should be loaded from the Eik server or not. |
 
-_Example_
 
-```js
-const client = new Client({
-    path: './some/other/assets.json',
-    development: true,
-    js: '/assets/scripts.js',
-    css: '/assets/styles.css',
-});
-```
+### .files(file)
 
-_Example_
+Constructs a full URL to an asset. The URL is build up by appending the vaule of the `file` argument to a base root. By default (production mode) the base root is built up from the values in the Eik config matching where the package for the config are located on the Eik server. If the module are in development mode, the value set for `base` on the construcor will be used as the base root.
 
-```js
-const client = new Client({
-    development: true,
-    js: { value: '/assets/scripts.js', type: 'module', async: true },
-    css: { value: '/assets/styles.css', type: 'text/css' },
-});
-```
+#### arguments
 
-### client.js
+| option      | default         | type       | required | details                                                                          |
+| ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
+| file        | `null`          | `string`   | `false`  | File to append to the base of a full URL to an asset                             |
 
-Returns an array of JavaScript asset objects for the given mode (development or non development) based on values in `assets.json`
-As asset object can be serialized using `JSON.stringify` or converted into an HTML script tag using the method `.toHTML()`
 
-_Examples_
+### .maps()
 
-```js
-client.js; // [{ type: 'module', value: 'http://<asset server>/finn/js/my-app/1.0.0/index.js' }]
-```
+Returns the image maps defined in the Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
 
-```js
-client.js[0].toHTML(); // <script type="module" src="http://<asset server>/finn/js/my-app/1.0.0/index.js">
-```
+## License
 
-### client.css
+Copyright (c) 2021 FINN.no
 
-Returns an array of CSS asset objects for the given mode (development or non development) based on values in `assets.json`
-As asset object can be serialized using `JSON.stringify` or converted into an HTML link tag using the method `.toHTML()`
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-_Example_
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-```js
-client.css; // [{ type: 'default', value: 'http://<asset server>/finn/css/my-app/1.0.0/index.css' }]
-```
-
-```js
-client.css[0].toHTML(); // <link type="text/stylesheet" rel="stylesheet" href="http://<asset server>/finn/css/my-app/1.0.0/index.css">
-```
-
-### client.scripts
-
-Returns JavaScript script tag markup for the given mode (development or non development) based on values in `assets.json`
-
-_Examples_
-
-```js
-client.scripts;
-// <script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.js" type="module"></script>
-// <script src="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/ie11/index.js"></script>`
-```
-
-### client.styles
-
-Returns CSS link tag markup for the given mode (development or non development) based on values in `assets.json`
-
-_Examples_
-
-```js
-client.styles;
-// <link href="http://localhost:4001/my-org/pkg/my-app-name/1.0.0/main/index.css" type="text/css" rel="stylesheet">
-```
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
