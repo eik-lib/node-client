@@ -98,7 +98,7 @@ This module has the following API
 
 ### async .load(options)
 
-Loads Eik config, and the configs import maps if set to, into the module. Once loaded both the config and import maps will be cached in the module.
+Loads Eik config into the module. If `maps` is set to `true` and import maps are present in config, these will also be loaded. Once loaded both the config and import maps will be cached in the module.
 
 #### options
 
