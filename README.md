@@ -76,7 +76,7 @@ const client = new EikNodeClient(options);
 
 | option      | default         | type      | required | details                                                                       |
 | ----------- | --------------- | --------- | -------- | ----------------------------------------------------------------------------- |
-| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing a eik.json file or package.json with eik config. |
+| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config. |
 | base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                |
 | development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                    |
 
