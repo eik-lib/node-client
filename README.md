@@ -104,7 +104,7 @@ Loads Eik config into the module. If `maps` is set to `true` and import maps are
 
 | option      | default         | type       | required | details                                                                          |
 | ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
-| maps        | `false`         | `boolean`  | `false`  | I import maps defined in the config should be loaded from the Eik server or not. |
+| maps        | `false`         | `boolean`  | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not. |
 
 
 ### .files(file)
