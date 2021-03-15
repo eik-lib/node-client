@@ -109,7 +109,7 @@ Loads Eik config into the module. If `maps` is set to `true` and import maps are
 
 ### .files(file)
 
-Constructs a full URL to an asset. The URL is build up by appending the vaule of the `file` argument to a base root. By default (production mode) the base root is built up from the values in the Eik config matching where the package for the config are located on the Eik server. If the module are in development mode, the value set for `base` on the construcor will be used as the base root.
+Constructs a full URL to an asset. The URL is built up by appending the value of the `file` argument to a `base` root. By default (production mode) the `base` root is built up from values in Eik config matching where the package for the config are located on the Eik server. If the module is in development mode, the value set for `base` on the constructor will be used as the `base` root.
 
 #### arguments
 
