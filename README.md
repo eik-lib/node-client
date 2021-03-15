@@ -30,7 +30,7 @@ client.maps()
 
 This module will load Eik config from either an `eik.json` file or from values set in `package.json` and then use these values to provide absolute URLs to assets on a Eik server. In addition to this it's possible to set a `base` URL which will be used as the "base root" for files when this module is set in development mode. This makes it easy to retrieve absolute URLs to assets on a Eik server when an application is running in production but also get URLs to the same assets when in development.
 
-In addition this module can also download the import maps defined in a Eik config and provide these for inclusion in an application.
+In addition this module can also download the import maps defined in Eik config and provide these for inclusion in an application.
 
 The following will use the information in a Eik config and provide an absolute URL to a file on a Eik server:
 
