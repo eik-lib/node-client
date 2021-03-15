@@ -44,7 +44,7 @@ const client = new EikNodeClient({
 
 await client.load();
 
-// Will ex output: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js
+// Will, for example, output: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js
 client.file('/path/script.js')
 ```
 
