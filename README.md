@@ -66,7 +66,7 @@ client.file('/path/script.js')
 
 ## Constructor
 
-Create a new Layout instance.
+Create a new client instance.
 
 ```js
 const client = new EikNodeClient(options);
