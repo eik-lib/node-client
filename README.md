@@ -120,7 +120,7 @@ Constructs a full URL to an asset. The URL is built up by appending the value of
 
 ### .maps()
 
-Returns the image maps defined in the Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
+Returns the image maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
 
 ## License
 
