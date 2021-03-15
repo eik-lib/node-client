@@ -32,7 +32,7 @@ This module will load Eik config from either an `eik.json` file or from values s
 
 In addition this module can also download the import maps defined in Eik config and provide these for inclusion in an application.
 
-The following will use the information in a Eik config and provide an absolute URL to a file on a Eik server:
+The following will use the information in Eik config and provide an absolute URL to a file on an Eik server:
 
 ```js
 import EikNodeClient from '@eik/node-client';
