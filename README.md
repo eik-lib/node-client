@@ -86,7 +86,7 @@ Path to directory containing a eik.json file or package.json with eik config.
 
 #### base
 
-Base root to be used for returned asset files. Can be both an absolute URL or relative URL. Will only be applied when the module are in development mode.
+Base root to be used for returned asset files. Can be either an absolute URL or relative URL. Will only be applied when the module is in development mode.
 
 #### development
 
