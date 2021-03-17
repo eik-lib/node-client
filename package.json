@@ -38,8 +38,8 @@
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
     "@eik/common": "4.0.0-next.4",
-    "node-fetch": "2.6.1",
-    "abslog": "2.4.0"
+    "abslog": "2.4.0",
+    "node-fetch": "2.6.1"
   },
   "devDependencies": {
     "@semantic-release/changelog": "5.0.1",
@@ -53,6 +53,7 @@
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
+    "babel-eslint": "10.1.0",
     "prettier": "2.2.1",
     "rollup": "2.40.0",
     "semantic-release": "17.4.1",
