@@ -1,6 +1,7 @@
 import { helpers } from '@eik/common';
 import { join } from 'path';
 import fetch from 'node-fetch';
+import EikAsset from './asset.js';
 
 const isUrl = (value = '') => value.startsWith('http');
 
@@ -72,14 +73,20 @@ export default class EikNodeClient {
     }
 
     file(file = '') {
+        const asset = new EikAsset();
+
         if (this.pDevelopment) {
             if (isUrl(this.pBase)) {
                 const base = new URL(this.pBase);
-                return new URL(join(base.pathname, file), base).href;
+                asset.value = new URL(join(base.pathname, file), base).href;
+            } else {
+                asset.value = join(this.pBase, file);
             }
-            return join(this.pBase, file);
+        } else {
+            asset.value = new URL(join(this.pathname, file), this.server).href;
         }
-        return new URL(join(this.pathname, file), this.server).href;
+        
+        return asset;
     }
 
     maps() {
