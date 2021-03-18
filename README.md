@@ -129,8 +129,8 @@ Returns a object with as follow:
 
 ```js
 {
-  integrity: sha512-zHQjnDpMW7IKVyTpT9cOPT1+xhUSOcbgXj6qHCPSPu1CbQfgwDEsIniXU54zDIN71zqmxLSp3hfIljpt69ok0w==
-  value: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js   
+  integrity: 'sha512-zHQjnDpMW7IKVyTpT9cOPT1+xhUSOcbgXj6qHCPSPu1CbQfgwDEsIniXU54zDIN71zqmxLSp3hfIljpt69ok0w==',
+  value: 'https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js'
 }
 ```
 
