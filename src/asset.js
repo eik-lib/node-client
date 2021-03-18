@@ -1,6 +1,6 @@
 const inspect = Symbol.for('nodejs.util.inspect.custom');
 
-export default class EikAsset {
+export default class Asset {
     #integrity;
     #value;
 

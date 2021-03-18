@@ -44,7 +44,11 @@ const client = new EikNodeClient({
 
 await client.load();
 
-// Will, for example, output: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js
+// Will, for example, output: 
+// {
+//   integrity: sha512-zHQjnDpMW7IKVyTpT9cOPT1+xhUSOcbgXj6qHCPSPu1CbQfgwDEsIniXU54zDIN71zqmxLSp3hfIljpt69ok0w==
+//   value: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js   
+// }
 client.file('/path/script.js')
 ```
 
@@ -60,7 +64,11 @@ const client = new EikNodeClient({
 
 await client.load();
 
-// Will output: http://localhost:8080/public/path/script.js
+// Will, for example, output: 
+// {
+//   integrity: null
+//   value: http://localhost:8080/public/path/script.js
+// }
 client.file('/path/script.js')
 ```
 
@@ -117,6 +125,16 @@ Constructs a full URL to an asset. The URL is built up by appending the value of
 | ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
 | file        | `null`          | `string`   | `false`  | File to append to the base of a full URL to an asset                             |
 
+Returns a object with as follow:
+
+```js
+{
+  integrity: sha512-zHQjnDpMW7IKVyTpT9cOPT1+xhUSOcbgXj6qHCPSPu1CbQfgwDEsIniXU54zDIN71zqmxLSp3hfIljpt69ok0w==
+  value: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js   
+}
+```
+
+If `integrity` of the file is not available, the value for `integrity` will be `null`. This will be the case when in development mode since integrity is calculated upon publish of a package to a Eik server.
 
 ### .maps()
 

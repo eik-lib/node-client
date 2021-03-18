@@ -2,6 +2,7 @@ export default {
     input: 'src/index.js',
     external: [
         '@eik/common',
+        'node-fetch',
         'abslog',
         'path',
     ],
