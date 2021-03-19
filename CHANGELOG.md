@@ -1,3 +1,10 @@
+# [1.0.0-next.4](https://github.com/eik-lib/node-client/compare/v1.0.0-next.3...v1.0.0-next.4) (2021-03-19)
+
+
+### Features
+
+* Make .file() return an object ([f53f15d](https://github.com/eik-lib/node-client/commit/f53f15dae288fda4b4527a3b4c69bab2e56f5169))
+
 # [1.0.0-next.3](https://github.com/eik-lib/node-client/compare/v1.0.0-next.2...v1.0.0-next.3) (2021-03-11)
 
 
