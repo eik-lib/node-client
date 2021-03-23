@@ -1,3 +1,10 @@
+# [1.0.0-next.5](https://github.com/eik-lib/node-client/compare/v1.0.0-next.4...v1.0.0-next.5) (2021-03-23)
+
+
+### Bug Fixes
+
+* Do not use getters and setters on public data object ([0505dcb](https://github.com/eik-lib/node-client/commit/0505dcb25b2563b826d5806fc30a7d148c111c00))
+
 # [1.0.0-next.4](https://github.com/eik-lib/node-client/compare/v1.0.0-next.3...v1.0.0-next.4) (2021-03-19)
 
 
