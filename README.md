@@ -138,7 +138,7 @@ If `integrity` of the file is not available, the value for `integrity` will be `
 
 ### .maps()
 
-Returns the image maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
+Returns the import maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
 
 ## License
 
