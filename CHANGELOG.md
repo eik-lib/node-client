@@ -1,3 +1,10 @@
+# [1.0.0-next.6](https://github.com/eik-lib/node-client/compare/v1.0.0-next.5...v1.0.0-next.6) (2021-04-09)
+
+
+### Bug Fixes
+
+* Make default value of integrity to be undefined ([a679f73](https://github.com/eik-lib/node-client/commit/a679f733351413e5e59cbd0f71c86fef8a08042c))
+
 # [1.0.0-next.5](https://github.com/eik-lib/node-client/compare/v1.0.0-next.4...v1.0.0-next.5) (2021-03-23)
 
 
