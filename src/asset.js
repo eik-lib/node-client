@@ -2,7 +2,7 @@ export default class Asset {
     constructor({
         value = '',
     } = {}) {
-        this.integrity = null;
+        this.integrity = undefined;
         this.value = value;
     }
 }

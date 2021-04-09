@@ -3,7 +3,7 @@ import Asset from '../src/asset.js';
 
 tap.test('Asset - Default values', (t) => {
     const asset = new Asset();
-    t.equal(asset.integrity, null, 'should be "null"');
+    t.equal(asset.integrity, undefined, 'should be "undefined"');
     t.equal(asset.value, '', 'should be empty string');
     t.end();
 });
@@ -28,7 +28,7 @@ tap.test('Asset - Set values through setters', (t) => {
 tap.test('Asset - Stringify object with default values', (t) => {
     const asset = new Asset();
     const obj = JSON.parse(JSON.stringify(asset));
-    t.equal(obj.integrity, null, 'should be "null"');
+    t.equal(obj.integrity, undefined, 'should be "undefined"');
     t.equal(obj.value, '', 'should be empty string');
     t.end();
 });
