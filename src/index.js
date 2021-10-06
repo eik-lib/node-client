@@ -26,45 +26,50 @@ const fetchImportMaps = async (urls = []) => {
 };
 
 export default class EikNodeClient {
+    #development;
+    #config
+    #path;
+    #base;
+    #maps;
     constructor({
         development = false,
         base = '',
         path = process.cwd(),
     } = {}) {
-        this.pDevelopment = development;
-        this.pConfig = {};
-        this.pPath = path;
-        this.pBase = base;
-        this.pMaps = [];
+        this.#development = development;
+        this.#config = {};
+        this.#path = path;
+        this.#base = base;
+        this.#maps = [];
     }
 
     async load({
         maps = false,
     } = {}) {
-        this.pConfig = await helpers.getDefaults(this.pPath);
+        this.#config = await helpers.getDefaults(this.#path);
         if (maps) {
-            this.pMaps = await fetchImportMaps(this.pConfig.map);
+            this.#maps = await fetchImportMaps(this.#config.map);
         }
     }
 
     get name() {
-        if (this.pConfig.name) return this.pConfig.name;
+        if (this.#config.name) return this.#config.name;
         return '';
     }
 
     get version() {
-        if (this.pConfig.version) return this.pConfig.version;
+        if (this.#config.version) return this.#config.version;
         return '';
     }
 
     get type() {
-        if (this.pConfig.type && this.pConfig.type === 'package') return 'pkg';
-        if (this.pConfig.type) return this.pConfig.type;
+        if (this.#config.type && this.#config.type === 'package') return 'pkg';
+        if (this.#config.type) return this.#config.type;
         return '';
     }
 
     get server() {
-        if (this.pConfig.server) return this.pConfig.server;
+        if (this.#config.server) return this.#config.server;
         return '';
     }
 
@@ -75,12 +80,12 @@ export default class EikNodeClient {
     file(file = '') {
         const asset = new EikAsset();
 
-        if (this.pDevelopment) {
-            if (isUrl(this.pBase)) {
-                const base = new URL(this.pBase);
+        if (this.#development) {
+            if (isUrl(this.#base)) {
+                const base = new URL(this.#base);
                 asset.value = new URL(join(base.pathname, file), base).href;
             } else {
-                asset.value = join(this.pBase, file);
+                asset.value = join(this.#base, file);
             }
         } else {
             asset.value = new URL(join(this.pathname, file), this.server).href;
@@ -90,6 +95,6 @@ export default class EikNodeClient {
     }
 
     maps() {
-        return this.pMaps;
+        return this.#maps;
     }
 }
