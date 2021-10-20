@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@eik/common": "^1.0.0-alpha.1",
+    "@eik/common": "^3.0.0",
     "@podium/utils": "^4.1.2",
     "pkg-dir": "^4.2.0"
   },
