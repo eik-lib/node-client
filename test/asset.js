@@ -16,7 +16,7 @@ tap.test('Asset - Set values through constructor', (t) => {
     t.end();
 });
 
-tap.test('Asset - Set values through setters', (t) => {
+tap.test('Asset - Set values through properties', (t) => {
     const asset = new Asset();
     asset.integrity = 'bar';
     asset.value = 'foo';

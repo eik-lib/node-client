@@ -1,0 +1,11 @@
+{
+  "name": "eik-fixture",
+  "version": "1.0.2",
+  "server": "https://cdn.eik.dev",
+  "type": "package",
+  "files": "./out",
+  "import-map": [
+    "https://cdn.eik.dev/map/mod-a/v2",
+    "https://cdn.eik.dev/map/mod-b/v1"
+  ]
+}
