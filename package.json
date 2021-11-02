@@ -1,35 +1,58 @@
 {
-  "name": "@eik/client",
-  "version": "1.0.0-alpha.1",
-  "description": "Node.js client for Eik",
-  "main": "index.js",
-  "scripts": {
-    "test": "tap",
-    "lint:format": "eslint --fix .",
-    "lint": "eslint ."
+  "name": "@eik/node-client",
+  "version": "1.0.0-next.6",
+  "description": "A node.js client for interacting with a Eik server.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./dist/index.cjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "CHANGELOG.md",
+    "package.json",
+    "LICENSE",
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "tap --no-coverage",
+    "lint:fix": "eslint --fix .",
+    "lint": "eslint .",
+    "prepare": "npm run -s build",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eik-lib/node-client.git"
+  },
+  "keywords": [
+    "eik",
+    "esm"
+  ],
+  "author": "Finn.no",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eik-lib/node-client/issues"
+  },
+  "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "^1.0.0-alpha.1",
-    "@podium/utils": "^4.1.2",
-    "pkg-dir": "^4.2.0"
+    "@eik/common": "3.0.0",
+    "abslog": "2.4.0",
+    "undici": "4.9.3"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/commit-analyzer": "8.0.1",
-    "@semantic-release/git": "9.0.0",
-    "@semantic-release/github": "7.2.0",
-    "@semantic-release/npm": "7.0.10",
-    "@semantic-release/release-notes-generator": "9.0.1",
-    "eslint": "6.6.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "6.6.0",
-    "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-prettier": "3.1.1",
-    "prettier": "1.19.1",
-    "semantic-release": "17.4.1",
-    "tap": "14.9.2"
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/git": "10.0.1",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.32.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-prettier": "4.0.0",
+    "prettier": "2.4.1",
+    "rollup": "2.59.0",
+    "semantic-release": "18.0.0",
+    "tap": "15.0.10"
   }
 }
