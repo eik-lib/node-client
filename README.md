@@ -18,12 +18,9 @@ const client = new EikNodeClient({
     base: '/public'
 });
 
-await client.load({
-    maps: true,
-});
+await client.load();
 
-client.file('/a-script-file.js')
-client.maps()
+const scriptPath = client.file('/a-script-file.js');
 ```
 
 ## Description
@@ -82,11 +79,12 @@ const client = new EikNodeClient(options);
 
 ### options
 
-| option      | default         | type      | required | details                                                                       |
-| ----------- | --------------- | --------- | -------- | ----------------------------------------------------------------------------- |
+| option      | default         | type      | required | details                                                                        |
+| ----------- | --------------- | --------- | -------- | ------------------------------------------------------------------------------ |
 | path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config. |
-| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                |
-| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                    |
+| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                 |
+| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                     |
+| loadMaps    | `false`         | `boolean` | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not. |
 
 #### path
 
@@ -100,22 +98,19 @@ Base root to be used for returned asset files. Can be either an absolute URL or 
 
 Set the module in development mode or not.
 
+#### loadMaps
+
+Whether import maps defined in the config should be loaded from the Eik server or not. The import maps is loaded by calling the `.load()` method and loaded the maps can be retrieved with the `.maps()` method. The import maps will be cached in the module.
+
 ## API
 
 This module has the following API
 
-### async .load(options)
+### async .load()
 
-Loads Eik config into the module. If `maps` is set to `true` and import maps are present in config, these will also be loaded. Once loaded both the config and import maps will be cached in the module.
+Loads Eik config into the module. The config will be cached in the module. If `loadMaps` is set to `true` on the constructor, the import maps defined in the config will be loaded from the Eik server
 
-#### options
-
-| option      | default         | type       | required | details                                                                          |
-| ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
-| maps        | `false`         | `boolean`  | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not. |
-
-
-### .files(file)
+### .file(file)
 
 Constructs a full URL to an asset. The URL is built up by appending the value of the `file` argument to a `base` root. By default (production mode) the `base` root is built up from values in Eik config matching where the package for the config are located on the Eik server. If the module is in development mode, the value set for `base` on the constructor will be used as the `base` root.
 
@@ -138,7 +133,7 @@ If `integrity` of the file is not available, the value for `integrity` will be `
 
 ### .maps()
 
-Returns the import maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `maps` option on the `.load()` method to `true`.
+Returns the import maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `loadMaps` option on the constructor to `true`.
 
 ## License
 
