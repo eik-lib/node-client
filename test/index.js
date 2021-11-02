@@ -111,7 +111,7 @@ tap.test('Client - Default settings - Config is not loaded', (t) => {
     t.throws(() => {
         // eslint-disable-next-line no-unused-vars
         const val = client.maps();
-    }, /Eik config was not loaded or "loadMaps" is "false" calling .maps()/, 'Should throw');
+    }, /Eik config was not loaded or "loadMaps" is "false" when calling .maps()/, 'Should throw');
 
 
     t.end();

@@ -103,6 +103,6 @@ export default class NodeClient {
 
     maps() {
         if (this.#config.version && this.#loadMaps) return this.#maps;
-        throw new Error('Eik config was not loaded or "loadMaps" is "false" calling .maps()');
+        throw new Error('Eik config was not loaded or "loadMaps" is "false" when calling .maps()');
     }
 }
