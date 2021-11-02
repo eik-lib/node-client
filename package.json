@@ -37,25 +37,21 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "4.0.0-next.4",
+    "@eik/common": "3.0.0",
     "abslog": "2.4.0",
-    "undici": "4.7.1"
+    "undici": "4.9.3"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "6.0.0",
-    "@semantic-release/commit-analyzer": "9.0.1",
-    "@semantic-release/git": "10.0.0",
-    "@semantic-release/github": "8.0.1",
-    "@semantic-release/npm": "8.0.0",
-    "@semantic-release/release-notes-generator": "10.0.2",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/git": "10.0.1",
     "babel-eslint": "10.1.0",
     "eslint": "7.32.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.24.2",
+    "eslint-plugin-import": "2.25.2",
     "eslint-plugin-prettier": "4.0.0",
     "prettier": "2.4.1",
-    "rollup": "2.58.0",
+    "rollup": "2.59.0",
     "semantic-release": "18.0.0",
     "tap": "15.0.10"
   }
