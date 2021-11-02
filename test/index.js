@@ -64,12 +64,15 @@ class Server {
 
 tap.beforeEach(async (t) => {
     const server = new Server();    
+    // eslint-disable-next-line no-param-reassign
     t.context.server = await server.listen();
     
     const address = t.context.server.address();
     const fixture = await writeTempConfig(address);
 
+    // eslint-disable-next-line no-param-reassign
     t.context.address = `http://${address.address}:${address.port}`;
+    // eslint-disable-next-line no-param-reassign
     t.context.fixture = fixture;
 });
 
@@ -108,7 +111,7 @@ tap.test('Client - Default settings - Config is not loaded', (t) => {
     t.throws(() => {
         // eslint-disable-next-line no-unused-vars
         const val = client.maps();
-    }, /Eik config was not loaded or \"loadMaps\" is \"false\" calling .maps()/, 'Should throw');
+    }, /Eik config was not loaded or "loadMaps" is "false" calling .maps()/, 'Should throw');
 
 
     t.end();
