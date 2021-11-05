@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/eik-lib/node-client/compare/v1.0.1...v1.1.0) (2021-11-05)
+
+
+### Features
+
+* Add .base() method to retrieve a base URL to a package ([#33](https://github.com/eik-lib/node-client/issues/33)) ([1dae896](https://github.com/eik-lib/node-client/commit/1dae89696911e6257bf9f89078e2e68e139291c5))
+
 ## [1.0.1](https://github.com/eik-lib/node-client/compare/v1.0.0...v1.0.1) (2021-11-03)
 
 
