@@ -52,7 +52,7 @@
     "prettier": "2.5.0",
     "rollup": "2.60.1",
     "semantic-release": "18.0.1",
-    "tap": "15.0.10",
+    "tap": "15.1.5",
     "@babel/eslint-parser": "7.16.3"
   }
 }
