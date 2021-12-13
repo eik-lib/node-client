@@ -50,7 +50,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "prettier": "2.5.1",
-    "rollup": "2.60.2",
+    "rollup": "2.61.1",
     "semantic-release": "18.0.1",
     "tap": "15.1.5",
     "@babel/eslint-parser": "7.16.3"
