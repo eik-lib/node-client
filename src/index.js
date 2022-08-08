@@ -3,7 +3,10 @@ import { request } from 'undici';
 import { join } from 'path';
 import Asset from './asset.js';
 
-const isUrl = (value = '') => value.startsWith('http');
+const trimSlash = (value = '') => {
+    if (value.endsWith('/')) return value.substring(0, value.length - 1);
+    return value;
+}
 
 const fetchImportMaps = async (urls = []) => {
     try{
@@ -47,7 +50,7 @@ export default class NodeClient {
         this.#loadMaps = loadMaps;
         this.#config = {};
         this.#path = path;
-        this.#base = base;
+        this.#base = trimSlash(base);
         this.#maps = [];
     }
 
@@ -84,25 +87,20 @@ export default class NodeClient {
         throw new Error('Eik config was not loaded before calling .pathname');
     }
 
-    file(file = '') {
-        const asset = new Asset();
+    base() {
+        if (this.#development) return this.#base;
+        return `${this.server}${this.pathname}`;
+    }
 
-        if (this.#development) {
-            if (isUrl(this.#base)) {
-                const base = new URL(this.#base);
-                asset.value = new URL(join(base.pathname, file), base).href;
-            } else {
-                asset.value = join(this.#base, file);
-            }
-        } else {
-            asset.value = new URL(join(this.pathname, file), this.server).href;
-        }
-        
-        return asset;
+    file(file = '') {
+        const base = this.base();
+        return new Asset({
+            value: `${base}${file}`,
+        });
     }
 
     maps() {
         if (this.#config.version && this.#loadMaps) return this.#maps;
-        throw new Error('Eik config was not loaded or "loadMaps" is "false" calling .maps()');
+        throw new Error('Eik config was not loaded or "loadMaps" is "false" when calling .maps()');
     }
 }

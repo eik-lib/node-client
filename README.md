@@ -102,17 +102,69 @@ Set the module in development mode or not.
 
 Whether import maps defined in the config should be loaded from the Eik server or not. The import maps is loaded by calling the `.load()` method and loaded the maps can be retrieved with the `.maps()` method. The import maps will be cached in the module.
 
-## API
+### options
 
 This module has the following API
 
 ### async .load()
 
-Loads Eik config into the module. The config will be cached in the module. If `loadMaps` is set to `true` on the constructor, the import maps defined in the config will be loaded from the Eik server
+Loads Eik config from the Eik config into the object instance. If `loadMaps` is set to `true` on the constructor, the import maps defined in the config will be loaded from the Eik server. 
+
+### .base()
+
+Constructs a URL to the base of a package of assets. The returned value will differ depending on if development mode is set to true or not.
+
+When in non development mode, the returned value will be built up by the values found in the loaded Eik config and provide a URL to where the files can be expected to be on the Eik server.
+
+```js
+const client = new EikNodeClient({
+    development: false,
+    base: 'http://localhost:8080/assets'
+});
+await client.load();
+
+client.base()  // https://cdn.eik.dev/pkg/mymodue/2.4.1
+```
+
+When in development mode, the returned value will be equal to whats set on the `base` argument on the constructor.
+
+```js
+const client = new EikNodeClient({
+    development: true,
+    base: 'http://localhost:8080/assets'
+});
+await client.load();
+
+client.base()  // http://localhost:8080/assets
+```
 
 ### .file(file)
 
-Constructs a full URL to an asset. The URL is built up by appending the value of the `file` argument to a `base` root. By default (production mode) the `base` root is built up from values in Eik config matching where the package for the config are located on the Eik server. If the module is in development mode, the value set for `base` on the constructor will be used as the `base` root.
+Constructs a full URL to an asset. The URL is built up by appending the value of the `file` argument to a `base` root. The returned value will differ depending on if development mode is set to true or not.
+
+When in non development mode, the returned value will be built up by the values found in the loaded Eik config and provide a URL to where the files can be expected to be on the Eik server plus the provided value to the `file` argument on the method.
+
+```js
+const client = new EikNodeClient({
+    development: false,
+    base: 'http://localhost:8080/assets'
+});
+await client.load();
+
+client.file('/js/script.js')  // Returns an asset.value like: https://cdn.eik.dev/pkg/mymodue/2.4.1/js/script.js
+```
+
+When in development mode, the returned value will be equal to whats set on the `base` argument on the constructor plus the provided value to the `file` argument on the method.
+
+```js
+const client = new EikNodeClient({
+    development: true,
+    base: 'http://localhost:8080/assets'
+});
+await client.load();
+
+client.file('/js/script.js')  // Returns an asset.value like: http://localhost:8080/assets/js/script.js
+```
 
 #### arguments
 

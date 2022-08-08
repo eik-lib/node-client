@@ -2,7 +2,7 @@ export default {
     input: 'src/index.js',
     external: [
         '@eik/common',
-        'node-fetch',
+        'undici',
         'abslog',
         'path',
     ],

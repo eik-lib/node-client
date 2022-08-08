@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "1.0.0-next.6",
+  "version": "1.1.28",
   "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -37,22 +37,22 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "3.0.0",
+    "@eik/common": "3.0.1",
     "abslog": "2.4.0",
-    "undici": "4.9.3"
+    "undici": "5.8.1"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
-    "babel-eslint": "10.1.0",
-    "eslint": "7.32.0",
-    "eslint-config-airbnb-base": "14.2.1",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.25.2",
-    "eslint-plugin-prettier": "4.0.0",
-    "prettier": "2.4.1",
-    "rollup": "2.59.0",
-    "semantic-release": "18.0.0",
-    "tap": "15.0.10"
+    "eslint": "8.21.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.7.1",
+    "rollup": "2.77.2",
+    "semantic-release": "19.0.3",
+    "tap": "16.3.0",
+    "@babel/eslint-parser": "7.18.9"
   }
 }
