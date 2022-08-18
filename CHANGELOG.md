@@ -1,3 +1,10 @@
+# [2.0.0-next.3](https://github.com/eik-lib/node-client/compare/v2.0.0-next.2...v2.0.0-next.3) (2022-08-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency undici to v5.8.2 ([652c0af](https://github.com/eik-lib/node-client/commit/652c0af76d4eff970ba8954d8f287703c30acd73))
+
 # [2.0.0-next.2](https://github.com/eik-lib/node-client/compare/v2.0.0-next.1...v2.0.0-next.2) (2022-08-18)
 
 
