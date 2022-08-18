@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "1.1.28",
+  "version": "1.1.29",
   "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -39,7 +39,7 @@
   "dependencies": {
     "@eik/common": "3.0.1",
     "abslog": "2.4.0",
-    "undici": "5.8.1"
+    "undici": "5.8.2"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.1",
