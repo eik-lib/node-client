@@ -1,5 +1,5 @@
 import { mkdtemp, writeFile } from 'fs/promises';
-import { helpers } from '@eik/common';
+import loader from '@eik/common-config-loader';
 import path from 'path';
 import http from 'http';
 import tap from 'tap';
@@ -8,7 +8,7 @@ import os from 'os';
 import NodeClient from '../src/index.js';
 
 const FIXTURE_PATH = `${process.cwd()}/fixtures`;
-const FIXTURE_FILE = await helpers.getDefaults(FIXTURE_PATH);
+const FIXTURE_FILE = await loader.getDefaults(FIXTURE_PATH);
 
 const writeTempConfig = async (address) => {
     const pathname = await mkdtemp(path.join(os.tmpdir(), `eik-${address.port.toString()}-`));

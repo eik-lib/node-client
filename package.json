@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "1.1.29",
+  "version": "2.0.0-next.2",
   "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "3.0.1",
+    "@eik/common-config-loader": "4.0.0-next.8",
     "abslog": "2.4.0",
     "undici": "5.8.2"
   },
