@@ -1,3 +1,10 @@
+# [2.0.0-next.2](https://github.com/eik-lib/node-client/compare/v2.0.0-next.1...v2.0.0-next.2) (2022-08-18)
+
+
+### Features
+
+* Use the new @eik/common-config-loader module ([#104](https://github.com/eik-lib/node-client/issues/104)) ([5de927c](https://github.com/eik-lib/node-client/commit/5de927ca74c461be8d6bbd0048a2afc6812cb085))
+
 # [2.0.0-next.1](https://github.com/eik-lib/node-client/compare/v1.1.28...v2.0.0-next.1) (2022-08-08)
 
 
