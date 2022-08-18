@@ -1,9 +1,42 @@
-## [1.1.29](https://github.com/eik-lib/node-client/compare/v1.1.28...v1.1.29) (2022-08-15)
+# [2.0.0-next.3](https://github.com/eik-lib/node-client/compare/v2.0.0-next.2...v2.0.0-next.3) (2022-08-18)
 
 
 ### Bug Fixes
 
 * **deps:** update dependency undici to v5.8.2 ([652c0af](https://github.com/eik-lib/node-client/commit/652c0af76d4eff970ba8954d8f287703c30acd73))
+
+# [2.0.0-next.2](https://github.com/eik-lib/node-client/compare/v2.0.0-next.1...v2.0.0-next.2) (2022-08-18)
+
+
+### Features
+
+* Use the new @eik/common-config-loader module ([#104](https://github.com/eik-lib/node-client/issues/104)) ([5de927c](https://github.com/eik-lib/node-client/commit/5de927ca74c461be8d6bbd0048a2afc6812cb085))
+
+# [2.0.0-next.1](https://github.com/eik-lib/node-client/compare/v1.1.28...v2.0.0-next.1) (2022-08-08)
+
+
+### Bug Fixes
+
+* Add CommonJS support ([b634537](https://github.com/eik-lib/node-client/commit/b6345378236d1bf60dc1ff6ceee1a285ca335e7f))
+* Do not use getters and setters on public data object ([0505dcb](https://github.com/eik-lib/node-client/commit/0505dcb25b2563b826d5806fc30a7d148c111c00))
+* Make default value of integrity to be undefined ([a679f73](https://github.com/eik-lib/node-client/commit/a679f733351413e5e59cbd0f71c86fef8a08042c))
+
+
+### chore
+
+* Rename module to @eik/node-client ([f3d8c73](https://github.com/eik-lib/node-client/commit/f3d8c7325b90b345a79df731544f53ebb11c81bf))
+
+
+### Features
+
+* Make .file() return an object ([f53f15d](https://github.com/eik-lib/node-client/commit/f53f15dae288fda4b4527a3b4c69bab2e56f5169))
+* Rework module to suite current functionality of Eik ([559294c](https://github.com/eik-lib/node-client/commit/559294cc8d1bd793873ba02000da6376312e0160))
+
+
+### BREAKING CHANGES
+
+* Rename module to @eik/node-client
+* API is reworked to suite the current functionality of Eik
 
 ## [1.1.28](https://github.com/eik-lib/node-client/compare/v1.1.27...v1.1.28) (2022-08-08)
 

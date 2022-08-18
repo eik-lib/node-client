@@ -102,7 +102,7 @@ Set the module in development mode or not.
 
 Whether import maps defined in the config should be loaded from the Eik server or not. The import maps is loaded by calling the `.load()` method and loaded the maps can be retrieved with the `.maps()` method. The import maps will be cached in the module.
 
-## API
+### options
 
 This module has the following API
 

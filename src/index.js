@@ -1,6 +1,6 @@
-import { helpers } from '@eik/common';
 import { request } from 'undici';
 import { join } from 'path';
+import loader from '@eik/common-config-loader';
 import Asset from './asset.js';
 
 const trimSlash = (value = '') => {
@@ -55,7 +55,7 @@ export default class NodeClient {
     }
 
     async load() {
-        this.#config = await helpers.getDefaults(this.#path);
+        this.#config = await loader.getDefaults(this.#path);
         if (this.#loadMaps) {
             this.#maps = await fetchImportMaps(this.#config.map);
         }
