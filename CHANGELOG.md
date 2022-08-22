@@ -1,3 +1,24 @@
+# [2.0.0-next.4](https://github.com/eik-lib/node-client/compare/v2.0.0-next.3...v2.0.0-next.4) (2022-08-22)
+
+
+### Features
+
+* Remove support for CJS. ESM only ([#106](https://github.com/eik-lib/node-client/issues/106)) ([d74f8c8](https://github.com/eik-lib/node-client/commit/d74f8c8266b67119d8d110524533a0bd7ce19e7d))
+
+
+### BREAKING CHANGES
+
+* This PR removes the support for CJS in this module. This module is now ESM only.
+
+* feat: Remove CJS support. ESM only.
+* Support for CJS is now removed in this module. It is ESM only.
+
+* ci: use 0.0.0.0 instead of localhost
+
+* fix: remove console.log() statement
+
+Co-authored-by: Trygve Lie <trygve.lie@finn.no>
+
 # [2.0.0-next.3](https://github.com/eik-lib/node-client/compare/v2.0.0-next.2...v2.0.0-next.3) (2022-08-18)
 
 
