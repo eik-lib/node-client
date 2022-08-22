@@ -47,7 +47,7 @@ class Server {
 
     listen() {
         return new Promise((resolve) => {
-            const connection = this.server.listen(0, 'localhost', () => {
+            const connection = this.server.listen(0, '0.0.0.0', () => {
                 resolve(connection);
             });
         });
@@ -175,14 +175,14 @@ tap.test('Client - Retrieve a file path - Development mode is set to "true" - Ba
 tap.test('Client - Retrieve a file path - Development mode is set to "true" - Base is set to absolute URL', async (t) => {
     const client = new NodeClient({
         development: true,
-        base: 'http://localhost:7777/prefix/',
+        base: 'http://0.0.0.0:7777/prefix/',
         path: t.context.fixture,
     });
     await client.load();
 
     const resolved = client.file('/some/path/foo.js');
 
-    t.equal(resolved.value, 'http://localhost:7777/prefix/some/path/foo.js');
+    t.equal(resolved.value, 'http://0.0.0.0:7777/prefix/some/path/foo.js');
     t.end();
 });
 
@@ -194,6 +194,7 @@ tap.test('Client - Load maps', async (t) => {
     await client.load();
     
     const maps = client.maps();
+    console.log(maps)
     t.same(maps, [
         { imports: { eik: '/src/eik.js' } },
         { imports: { eik: '/src/eik.js' } }
@@ -232,14 +233,14 @@ tap.test('Client - Retrieve a base - Development mode is set to "true" - Base is
 tap.test('Client - Retrieve a base - Development mode is set to "true" - Base is set to a absolute URL', async (t) => {
     const client = new NodeClient({
         development: true,
-        base: 'http://localhost:7777/prefix/some/path/',
+        base: 'http://0.0.0.0:7777/prefix/some/path/',
         path: t.context.fixture,
     });
     await client.load();
 
     const resolved = client.base();
 
-    t.equal(resolved, 'http://localhost:7777/prefix/some/path');
+    t.equal(resolved, 'http://0.0.0.0:7777/prefix/some/path');
     t.end();
 });
 
