@@ -194,7 +194,7 @@ tap.test('Client - Load maps', async (t) => {
     await client.load();
     
     const maps = client.maps();
-    console.log(maps)
+    
     t.same(maps, [
         { imports: { eik: '/src/eik.js' } },
         { imports: { eik: '/src/eik.js' } }
