@@ -39,7 +39,7 @@
   "dependencies": {
     "@eik/common": "3.0.1",
     "abslog": "2.4.0",
-    "undici": "5.9.1"
+    "undici": "5.10.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.1",
