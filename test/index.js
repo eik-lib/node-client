@@ -255,3 +255,16 @@ tap.test('Client - Retrieve a base - Development mode is set to "false"', async 
     t.equal(resolved, `${t.context.address}/pkg/eik-fixture/1.0.2`);
     t.end();
 });
+
+tap.test('Client - Resolve a mapping', async (t) => {
+    const client = new NodeClient({
+        path: t.context.fixture,
+        loadMaps: true,
+    });
+    await client.load();
+
+    const mapping = client.mapping('eik');
+
+    t.equal(mapping, '/src/eik.js');
+    t.end();
+});
