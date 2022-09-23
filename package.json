@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "2.0.0-next.4",
+  "version": "2.0.0-next.5",
   "description": "A node.js client for interacting with a Eik server.",
   "type": "module",
   "main": "./src/index.js",

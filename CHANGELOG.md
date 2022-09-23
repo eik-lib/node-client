@@ -1,3 +1,10 @@
+# [2.0.0-next.5](https://github.com/eik-lib/node-client/compare/v2.0.0-next.4...v2.0.0-next.5) (2022-09-23)
+
+
+### Features
+
+* add .mapping(dep) shorthand method to resolve mapped bare imports directly ([a557cfd](https://github.com/eik-lib/node-client/commit/a557cfdc56f4553f721d1a67a7670eafc284b565))
+
 # [2.0.0-next.4](https://github.com/eik-lib/node-client/compare/v2.0.0-next.3...v2.0.0-next.4) (2022-08-22)
 
 
