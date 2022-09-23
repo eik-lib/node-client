@@ -187,6 +187,37 @@ If `integrity` of the file is not available, the value for `integrity` will be `
 
 Returns the import maps defined in Eik config from the Eik server. For the maps to be returned they need to be loaded from the Eik server. This is done by setting the `loadMaps` option on the constructor to `true`.
 
+### .mapping(identifier)
+
+Returns the last mapping entry for a given bare import `identifier`.
+`identifier` is a `string` key from an import map and the returned `string` is a the matching value from the same import map entry.
+
+#### arguments
+
+| option     | default | type     | required | details             |
+| ---------- | ------- | -------- | -------- | ------------------- |
+| identifier |         | `string` | `true`   | Bare import map key |
+
+**Example:**
+
+If an import map being used looks like:
+
+```json
+{
+    "imports": {
+        "react": "https://myserver.com/react/18.0.0/react.min.js"
+    }
+}
+```
+
+When the mapping method is called:
+
+```js
+const absoluteURL = client.mapping('react');
+```
+
+`absoluteURL` will be `https://myserver.com/react/18.0.0/react.min.js`
+
 ## License
 
 Copyright (c) 2021 FINN.no
