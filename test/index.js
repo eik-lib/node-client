@@ -214,6 +214,19 @@ tap.test('Client - Retrieve a file path - Development mode is set to "true" - Ba
     t.end();
 });
 
+tap.test('Client - Retrieve a file path - Development mode is set to "true" - Base is unset - file without starting slash', async (t) => {
+    const client = new NodeClient({
+        development: true,
+        path: t.context.fixture,
+    });
+    await client.load();
+
+    const resolved = client.file('some/path/foo.js');
+
+    t.equal(resolved.value, '/some/path/foo.js');
+    t.end();
+});
+
 tap.test('Client - Load maps', async (t) => {
     const client = new NodeClient({
         loadMaps: true,

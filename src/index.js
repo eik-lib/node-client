@@ -104,7 +104,7 @@ export default class NodeClient {
             const subPath = join(baseURL.pathname, file);
             value = new URL(subPath, base).toString();
         } else {
-            value = join(base, file);
+            value = join(base, '/', file);
         }
 
         return new Asset({
