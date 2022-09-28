@@ -186,6 +186,34 @@ tap.test('Client - Retrieve a file path - Development mode is set to "true" - Ba
     t.end();
 });
 
+tap.test('Client - Retrieve a file path - Development mode is set to "true" - Base is set to absolute URL - file without starting slash', async (t) => {
+    const client = new NodeClient({
+        development: true,
+        base: 'http://localhost:7777/prefix/',
+        path: t.context.fixture,
+    });
+    await client.load();
+
+    const resolved = client.file('some/path/foo.js');
+
+    t.equal(resolved.value, 'http://localhost:7777/prefix/some/path/foo.js');
+    t.end();
+});
+
+tap.test('Client - Retrieve a file path - Development mode is set to "true" - Base is set to relative path - file without starting slash', async (t) => {
+    const client = new NodeClient({
+        development: true,
+        base: '/prefix/',
+        path: t.context.fixture,
+    });
+    await client.load();
+
+    const resolved = client.file('some/path/foo.js');
+
+    t.equal(resolved.value, '/prefix/some/path/foo.js');
+    t.end();
+});
+
 tap.test('Client - Load maps', async (t) => {
     const client = new NodeClient({
         loadMaps: true,
