@@ -1,7 +1,7 @@
 import { helpers } from '@eik/common';
 import { request } from 'undici';
 import { join } from 'node:path';
-import { URL, resolve as resolveURL } from 'node:url';
+import { URL } from 'node:url';
 import Asset from './asset.js';
 
 const trimSlash = (value = '') => {
@@ -30,7 +30,6 @@ const fetchImportMaps = async (urls = []) => {
         });
         return await Promise.all(maps);
     } catch (err) {
-        console.log('ERROR', urls)
         throw new Error(
             `Unable to load import map file from server: ${err.message}`,
         );
