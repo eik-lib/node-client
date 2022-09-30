@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { request } from 'undici';
-import { join } from 'path';
+import { join } from 'node:path';
+import { URL } from 'node:url';
 import loader from '@eik/common-config-loader';
 import Asset from './asset.js';
 
@@ -8,6 +9,8 @@ const trimSlash = (value = '') => {
     if (value.endsWith('/')) return value.substring(0, value.length - 1);
     return value;
 };
+
+const ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/;
 
 const fetchImportMaps = async (urls = []) => {
     try {
@@ -95,8 +98,17 @@ export default class NodeClient {
 
     file(file = '') {
         const base = this.base();
+        let value;
+        if (base && ABSOLUTE_URL_REGEX.test(base)) {
+            const baseURL = new URL(base);
+            const subPath = join(baseURL.pathname, file);
+            value = new URL(subPath, base).toString();
+        } else {
+            value = join(base, '/', file);
+        }
+
         return new Asset({
-            value: `${base}${file}`,
+            value
         });
     }
 
