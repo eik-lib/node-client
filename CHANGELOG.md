@@ -1,3 +1,10 @@
+## [1.1.35](https://github.com/eik-lib/node-client/compare/v1.1.34...v1.1.35) (2022-12-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency undici to v5.14.0 ([9508c56](https://github.com/eik-lib/node-client/commit/9508c56febac371379a8cecfeb2ebb3aab79f5fa))
+
 ## [1.1.34](https://github.com/eik-lib/node-client/compare/v1.1.33...v1.1.34) (2022-11-28)
 
 
