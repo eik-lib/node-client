@@ -1,11 +1,6 @@
 export default {
     input: 'src/index.js',
-    external: [
-        '@eik/common',
-        'undici',
-        'abslog',
-        'path',
-    ],
+    external: ['@eik/common-config-loader', 'undici', 'abslog', 'path'],
     output: [
         {
             exports: 'auto',
