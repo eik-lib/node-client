@@ -47,7 +47,7 @@ class Server {
 
     listen() {
         return new Promise((resolve) => {
-            const connection = this.server.listen(0, 'localhost', () => {
+            const connection = this.server.listen(0, '127.0.0.1', () => {
                 resolve(connection);
             });
         });
