@@ -13,3 +13,4 @@ tmp/**/*
 coverage
 .vscode
 dist/
+.tap
