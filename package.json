@@ -53,6 +53,6 @@
     "prettier": "3.2.5",
     "rollup": "4.12.1",
     "semantic-release": "23.0.2",
-    "tap": "18.7.0"
+    "tap": "18.7.1"
   }
 }
