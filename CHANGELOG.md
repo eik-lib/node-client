@@ -1,3 +1,10 @@
+## [1.1.60](https://github.com/eik-lib/node-client/compare/v1.1.59...v1.1.60) (2024-04-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency abslog to v2.4.2 ([d3a80a4](https://github.com/eik-lib/node-client/commit/d3a80a468075f6d73860817708f380bf171fc6d2))
+
 ## [1.1.59](https://github.com/eik-lib/node-client/compare/v1.1.58...v1.1.59) (2024-04-04)
 
 
