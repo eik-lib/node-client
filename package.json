@@ -42,7 +42,7 @@
     "undici": "5.28.4"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.24.1",
+    "@babel/eslint-parser": "7.24.5",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "eslint": "8.57.0",
