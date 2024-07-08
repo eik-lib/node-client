@@ -40,7 +40,9 @@ export default class NodeClient {
     #path;
     #base;
     #maps;
+		#server;
     constructor({
+        server = null,
         development = false,
         loadMaps = false,
         base = '',
@@ -52,6 +54,7 @@ export default class NodeClient {
         this.#path = path;
         this.#base = trimSlash(base);
         this.#maps = [];
+				this.#server = server;
     }
 
     async load() {
@@ -78,6 +81,7 @@ export default class NodeClient {
     }
 
     get server() {
+        if (this.#server) return this.#server;
         if (this.#config.server) return this.#config.server;
         throw new Error('Eik config was not loaded before calling .server');
     }
