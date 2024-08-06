@@ -1,6 +1,9 @@
 # @eik/node-client
 
-The Eik Node.js client facilitates loading Eik config and providing URLs to assets on an Eik server or in local development plus loading import maps from the Eik server.
+This is an Eik utility for servers running on Node. With it you can:
+
+-   generate different URLs to assets on an Eik server depending on environment (development vs production).
+-   get the import maps you have configured in `eik.json` from the Eik server, should you want to use them in the HTML response.
 
 ## Install
 
@@ -8,14 +11,16 @@ The Eik Node.js client facilitates loading Eik config and providing URLs to asse
 npm install @eik/node-client
 ```
 
-## Basic usage
+## Usage
+
+The most common use case for this module is linking to a file. When developing you typically want to use a local version of the file, then link to the published version on Eik when running in production.
 
 ```js
-import EikNodeClient from '@eik/node-client';
+import Eik from '@eik/node-client';
 
-const client = new EikNodeClient({
+const client = new Eik({
     development: false,
-    base: '/public'
+    base: '/public',
 });
 
 await client.load();
@@ -36,17 +41,17 @@ import EikNodeClient from '@eik/node-client';
 
 const client = new EikNodeClient({
     development: false,
-    base: 'http://localhost:8080/public'        
+    base: 'http://localhost:8080/public',
 });
 
 await client.load();
 
-// Will, for example, output: 
+// Will, for example, output:
 // {
 //   integrity: sha512-zHQjnDpMW7IKVyTpT9cOPT1+xhUSOcbgXj6qHCPSPu1CbQfgwDEsIniXU54zDIN71zqmxLSp3hfIljpt69ok0w==
-//   value: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js   
+//   value: https://cdn.eik.dev/pkg/mymodue/2.4.1/path/script.js
 // }
-client.file('/path/script.js')
+client.file('/path/script.js');
 ```
 
 The following is the same as above but in development mode. The output will then be based on the vaule set for `base`:
@@ -56,17 +61,17 @@ import EikNodeClient from '@eik/node-client';
 
 const client = new EikNodeClient({
     development: true,
-    base: 'http://localhost:8080/public'        
+    base: 'http://localhost:8080/public',
 });
 
 await client.load();
 
-// Will, for example, output: 
+// Will, for example, output:
 // {
 //   integrity: null
 //   value: http://localhost:8080/public/path/script.js
 // }
-client.file('/path/script.js')
+client.file('/path/script.js');
 ```
 
 ## Constructor
@@ -79,11 +84,11 @@ const client = new EikNodeClient(options);
 
 ### options
 
-| option      | default         | type      | required | details                                                                        |
-| ----------- | --------------- | --------- | -------- | ------------------------------------------------------------------------------ |
-| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config. |
-| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                 |
-| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                     |
+| option      | default         | type      | required | details                                                                                          |
+| ----------- | --------------- | --------- | -------- | ------------------------------------------------------------------------------------------------ |
+| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config.                   |
+| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                                   |
+| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                                       |
 | loadMaps    | `false`         | `boolean` | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not. |
 
 #### path
@@ -108,7 +113,7 @@ This module has the following API
 
 ### async .load()
 
-Loads Eik config from the Eik config into the object instance. If `loadMaps` is set to `true` on the constructor, the import maps defined in the config will be loaded from the Eik server. 
+Loads Eik config from the Eik config into the object instance. If `loadMaps` is set to `true` on the constructor, the import maps defined in the config will be loaded from the Eik server.
 
 ### .base()
 
@@ -119,11 +124,11 @@ When in non development mode, the returned value will be built up by the values 
 ```js
 const client = new EikNodeClient({
     development: false,
-    base: 'http://localhost:8080/assets'
+    base: 'http://localhost:8080/assets',
 });
 await client.load();
 
-client.base()  // https://cdn.eik.dev/pkg/mymodue/2.4.1
+client.base(); // https://cdn.eik.dev/pkg/mymodue/2.4.1
 ```
 
 When in development mode, the returned value will be equal to whats set on the `base` argument on the constructor.
@@ -131,11 +136,11 @@ When in development mode, the returned value will be equal to whats set on the `
 ```js
 const client = new EikNodeClient({
     development: true,
-    base: 'http://localhost:8080/assets'
+    base: 'http://localhost:8080/assets',
 });
 await client.load();
 
-client.base()  // http://localhost:8080/assets
+client.base(); // http://localhost:8080/assets
 ```
 
 ### .file(file)
@@ -147,11 +152,11 @@ When in non development mode, the returned value will be built up by the values 
 ```js
 const client = new EikNodeClient({
     development: false,
-    base: 'http://localhost:8080/assets'
+    base: 'http://localhost:8080/assets',
 });
 await client.load();
 
-client.file('/js/script.js')  // Returns an asset.value like: https://cdn.eik.dev/pkg/mymodue/2.4.1/js/script.js
+client.file('/js/script.js'); // Returns an asset.value like: https://cdn.eik.dev/pkg/mymodue/2.4.1/js/script.js
 ```
 
 When in development mode, the returned value will be equal to whats set on the `base` argument on the constructor plus the provided value to the `file` argument on the method.
@@ -159,18 +164,18 @@ When in development mode, the returned value will be equal to whats set on the `
 ```js
 const client = new EikNodeClient({
     development: true,
-    base: 'http://localhost:8080/assets'
+    base: 'http://localhost:8080/assets',
 });
 await client.load();
 
-client.file('/js/script.js')  // Returns an asset.value like: http://localhost:8080/assets/js/script.js
+client.file('/js/script.js'); // Returns an asset.value like: http://localhost:8080/assets/js/script.js
 ```
 
 #### arguments
 
-| option      | default         | type       | required | details                                                                          |
-| ----------- | --------------- | ---------- | -------- | -------------------------------------------------------------------------------- |
-| file        | `null`          | `string`   | `false`  | File to append to the base of a full URL to an asset                             |
+| option | default | type     | required | details                                              |
+| ------ | ------- | -------- | -------- | ---------------------------------------------------- |
+| file   | `null`  | `string` | `false`  | File to append to the base of a full URL to an asset |
 
 Returns a object with as follow:
 

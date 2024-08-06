@@ -6,16 +6,15 @@ import Asset from './asset.js';
 const trimSlash = (value = '') => {
     if (value.endsWith('/')) return value.substring(0, value.length - 1);
     return value;
-}
+};
 
 const fetchImportMaps = async (urls = []) => {
-    try{
+    try {
         const maps = urls.map(async (map) => {
-            const {
-                statusCode,
-                body
-            } = await request(map, { maxRedirections: 2 });
-            
+            const { statusCode, body } = await request(map, {
+                maxRedirections: 2,
+            });
+
             if (statusCode === 404) {
                 throw new Error('Import map could not be found on server');
             } else if (statusCode >= 400 && statusCode < 500) {
@@ -31,7 +30,7 @@ const fetchImportMaps = async (urls = []) => {
             `Unable to load import map file from server: ${err.message}`,
         );
     }
-}
+};
 
 export default class NodeClient {
     #development;
@@ -40,6 +39,7 @@ export default class NodeClient {
     #path;
     #base;
     #maps;
+
     constructor({
         development = false,
         loadMaps = false,
@@ -83,7 +83,8 @@ export default class NodeClient {
     }
 
     get pathname() {
-        if (this.#config.type && this.#config.name && this.#config.version) return join('/', this.type, this.name, this.version);
+        if (this.#config.type && this.#config.name && this.#config.version)
+            return join('/', this.type, this.name, this.version);
         throw new Error('Eik config was not loaded before calling .pathname');
     }
 
@@ -101,6 +102,8 @@ export default class NodeClient {
 
     maps() {
         if (this.#config.version && this.#loadMaps) return this.#maps;
-        throw new Error('Eik config was not loaded or "loadMaps" is "false" when calling .maps()');
+        throw new Error(
+            'Eik config was not loaded or "loadMaps" is "false" when calling .maps()',
+        );
     }
 }
