@@ -32,6 +32,8 @@ jobs:
 
       - run: npm test
 
+      - run: npm run types
+
       - run: npx semantic-release
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
