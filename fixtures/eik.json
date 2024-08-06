@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/eik-lib/common/main/lib/schemas/eikjson.schema.json",
   "name": "eik-fixture",
   "version": "1.0.2",
   "server": "https://cdn.eik.dev",
