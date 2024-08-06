@@ -1,3 +1,5 @@
+/// <reference path="../types/index.d.ts" />
+
 import { mkdtemp, writeFile } from "fs/promises";
 import { helpers } from "@eik/common";
 import path from "path";
@@ -5,7 +7,7 @@ import http from "http";
 import tap from "tap";
 import os from "os";
 
-import NodeClient from "../src/index.js";
+import Eik from "../src/index.js";
 
 const FIXTURE_PATH = `${process.cwd()}/fixtures`;
 const FIXTURE_FILE = await helpers.getDefaults(FIXTURE_PATH);
@@ -84,7 +86,7 @@ tap.afterEach(async (t) => {
 });
 
 tap.test("Client - Default settings - Config is not loaded", (t) => {
-	const client = new NodeClient();
+	const client = new Eik();
 
 	t.throws(
 		() => {
@@ -144,7 +146,7 @@ tap.test("Client - Default settings - Config is not loaded", (t) => {
 });
 
 tap.test("Client - Default settings - Config is loaded", async (t) => {
-	const client = new NodeClient({
+	const client = new Eik({
 		path: t.context.fixture,
 	});
 	await client.load();
@@ -168,7 +170,7 @@ tap.test("Client - Default settings - Config is loaded", async (t) => {
 tap.test(
 	'Client - Default settings - Config is loaded and development mode is set to "true"',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			path: t.context.fixture,
 		});
@@ -194,7 +196,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a file path - Development mode is set to "false"',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			path: t.context.fixture,
 		});
 		await client.load();
@@ -210,7 +212,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a file path - Development mode is set to "true" - Base is unset',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			path: t.context.fixture,
 		});
@@ -226,7 +228,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a file path - Development mode is set to "true" - Base is set to absolute URL',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			base: "http://localhost:7777/prefix/",
 			path: t.context.fixture,
@@ -241,7 +243,7 @@ tap.test(
 );
 
 tap.test("Client - Load maps", async (t) => {
-	const client = new NodeClient({
+	const client = new Eik({
 		loadMaps: true,
 		path: t.context.fixture,
 	});
@@ -254,13 +256,32 @@ tap.test("Client - Load maps", async (t) => {
 		"Should return maps",
 	);
 
+	const combined = maps
+		.map((map) => map.imports)
+		.reduce((map, acc) => ({ ...acc, ...map }), {});
+
+	t.same(combined, { eik: "/src/eik.js" });
+
+	const html = `<script type="importmap">
+${JSON.stringify(combined, null, 2)}
+</script>`;
+
+	t.same(
+		html,
+		`<script type="importmap">
+{
+  "eik": "/src/eik.js"
+}
+</script>`,
+	);
+
 	t.end();
 });
 
 tap.test(
 	'Client - Retrieve a base - Development mode is set to "true" - Base is unset',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			path: t.context.fixture,
 		});
@@ -276,7 +297,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a base - Development mode is set to "true" - Base is set to a relative URL',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			base: "/prefix",
 			path: t.context.fixture,
@@ -293,7 +314,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a base - Development mode is set to "true" - Base is set to a absolute URL',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			development: true,
 			base: "http://localhost:7777/prefix/some/path/",
 			path: t.context.fixture,
@@ -310,7 +331,7 @@ tap.test(
 tap.test(
 	'Client - Retrieve a base - Development mode is set to "false"',
 	async (t) => {
-		const client = new NodeClient({
+		const client = new Eik({
 			path: t.context.fixture,
 		});
 		await client.load();
