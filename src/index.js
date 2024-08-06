@@ -1,7 +1,7 @@
 import { helpers } from "@eik/common";
 import { request } from "undici";
 import { join } from "path";
-import Asset from "./asset.js";
+import { Asset } from "./asset.js";
 
 const trimSlash = (value = "") => {
 	if (value.endsWith("/")) return value.substring(0, value.length - 1);
@@ -32,6 +32,63 @@ const fetchImportMaps = async (urls = []) => {
 	}
 };
 
+/**
+ * An Eik utility for servers running on Node. With it you can:
+ *  - generate different URLs to assets on an Eik server depending on environment (development vs production).
+ *  - get the import maps you have configured in `eik.json` from the Eik server, should you want to use them in the HTML response.
+ *
+ * @example
+ * ```js
+ * // Create an instance, then load information from `eik.json` and the Eik server
+ * import Eik from "@eik/node-client";
+ *
+ * const eik = new Eik();
+ * await eik.load();
+ * ```
+ * @example
+ * ```js
+ * //  Serve a local version of a file from `./public` in development and from Eik in production
+ * import path from "node:path";
+ * import Eik from "@eik/node-client";
+ * import fastifyStatic from "@fastify/static";
+ * import fastify from "fastify";
+ *
+ * const app = fastify();
+ * app.register(fastifyStatic, {
+ *    root: path.join(process.cwd(), "public"),
+ *    prefix: "/public/",
+ * });
+ *
+ * const eik = new Eik({
+ *    development: process.env.NODE_ENV === "development",
+ *    base: "/public",
+ * });
+ *
+ * // load information from `eik.json` and the Eik server
+ * await eik.load();
+ *
+ * // when development is true script.value will be /public/script.js.
+ * // when development is false script.value will be https://{server}/pkg/{name}/{version}/script.js
+ * // where {server}, {name} and {version} are read from eik.json
+ * const script = eik.file("/script.js");
+ *
+ * app.get("/", (req, reply) => {
+ *    reply.type("text/html; charset=utf-8");
+ *    reply.send(`<html><body>
+ *      <script
+ *        src="${script.value}"
+ *        ${script.integrity ? `integrity="${script.integrity}"` : ""}
+ *        type="module"></script>
+ *    </body></html>`);
+ * });
+ *
+ * app.listen({
+ *    port: 3000,
+ * });
+ *
+ * console.log("Listening on http://localhost:3000");
+ * ```
+ */
 export default class NodeClient {
 	#development;
 	#loadMaps;
@@ -93,10 +150,18 @@ export default class NodeClient {
 		return `${this.server}${this.pathname}`;
 	}
 
-	file(file = "") {
+	/**
+	 * Get a link to a file that is published on Eik when running in production.
+	 * When `development` is true, the pathname is prefixed with the `base` option.
+	 * You can use this feature to serve a local version when developing.
+	 *
+	 * @param {string} pathname pathname to the file relative to the root on Eik (ex: /path/to/script.js for a prod URL https://eik.store.com/pkg/my-app/1.0.0/path/to/script.js)
+	 * @returns {import('./asset.js').Asset}
+	 */
+	file(pathname = "") {
 		const base = this.base();
 		return new Asset({
-			value: `${base}${file}`,
+			value: `${base}${pathname}`,
 		});
 	}
 
