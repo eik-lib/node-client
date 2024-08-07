@@ -256,11 +256,9 @@ tap.test("Client - Load maps", async (t) => {
 		"Should return maps",
 	);
 
-	const combined = maps
-		.map((map) => map.imports)
-		.reduce((map, acc) => ({ ...acc, ...map }), {});
+	const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
 
-	t.same(combined, { eik: "/src/eik.js" });
+	t.same(combined, { imports: { eik: "/src/eik.js" } });
 
 	const html = `<script type="importmap">
 ${JSON.stringify(combined, null, 2)}
@@ -270,7 +268,9 @@ ${JSON.stringify(combined, null, 2)}
 		html,
 		`<script type="importmap">
 {
-  "eik": "/src/eik.js"
+  "imports": {
+    "eik": "/src/eik.js"
+  }
 }
 </script>`,
 	);

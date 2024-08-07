@@ -79,9 +79,7 @@ const client = new Eik({
 await client.load();
 
 const maps = client.maps();
-const combined = maps
-	.map((map) => map.imports)
-	.reduce((map, acc) => ({ ...acc, ...map }), {});
+const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
 
 const html = `
 <script type="importmap">
@@ -202,9 +200,7 @@ const client = new Eik({
 await client.load();
 
 const maps = client.maps();
-const combined = maps
-	.map((map) => map.imports)
-	.reduce((map, acc) => ({ ...acc, ...map }), {});
+const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
 
 const html = `
 <script type="importmap">
