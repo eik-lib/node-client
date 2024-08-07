@@ -1,9 +1,6 @@
 # @eik/node-client
 
-This is an Eik utility for servers running on Node. With it you can:
-
-- generate different URLs to assets on an Eik server depending on environment (development vs production).
-- get the import maps you have configured in `eik.json` from the Eik server, should you want to use them in the HTML response.
+This is a utility for getting assets and import maps from [Eik servers](https://github.com/eik-lib/service#readme) in Node web applications. For publishing and managing assets to an Eik server from Node scripts, see [`@eik/cli`](https://github.com/eik-lib/cli#readme).
 
 ## Install
 
@@ -13,9 +10,11 @@ npm install @eik/node-client
 
 ## Usage
 
-The most common use case for this module is linking to a file.
+The most common use case for this module is linking to a file. When developing you typically want to use a local version of the file, then link to the published version on Eik when running in production.
 
-When developing you typically want to use a local version of the file, then link to the published version on Eik when running in production.
+For that you use the [`file()` method](#filepathname), which returns an object `{ value, integrity }` where `value` is the link to the file.
+
+When running in production the link will point to the file on Eik. When `development` is `true` the pathname is prefixed with the `base` option instead of pointing to Eik, so your app can use a local version.
 
 ```js
 // Serve a local version of a file from `./public`
@@ -26,6 +25,8 @@ import fastifyStatic from "@fastify/static";
 import fastify from "fastify";
 
 const app = fastify();
+
+// Serve the contents of the ./public folder on the path /public
 app.register(fastifyStatic, {
 	root: path.join(process.cwd(), "public"),
 	prefix: "/public/",
