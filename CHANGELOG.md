@@ -1,3 +1,10 @@
+## [1.1.62](https://github.com/eik-lib/node-client/compare/v1.1.61...v1.1.62) (2024-08-07)
+
+
+### Bug Fixes
+
+* include type definitions ([bea3117](https://github.com/eik-lib/node-client/commit/bea3117093098fe25bb1c56df253ebd5349a7a40))
+
 ## [1.1.61](https://github.com/eik-lib/node-client/compare/v1.1.60...v1.1.61) (2024-05-06)
 
 
