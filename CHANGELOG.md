@@ -1,3 +1,10 @@
+## [1.1.63](https://github.com/eik-lib/node-client/compare/v1.1.62...v1.1.63) (2024-08-15)
+
+
+### Bug Fixes
+
+* generate valid URL pathname on windows hosts ([#197](https://github.com/eik-lib/node-client/issues/197)) ([08312a0](https://github.com/eik-lib/node-client/commit/08312a092fb3ad760abbf4b64e769161dd17acf0))
+
 ## [1.1.62](https://github.com/eik-lib/node-client/compare/v1.1.61...v1.1.62) (2024-08-07)
 
 
