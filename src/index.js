@@ -186,7 +186,7 @@ export default class Eik {
 	 */
 	get pathname() {
 		if (this.#config.type && this.#config.name && this.#config.version)
-			return join("/", this.type, this.name, this.version);
+			return join("/", this.type, this.name, this.version).replace(/\\/g, "/");
 		throw new Error("Eik config was not loaded before calling .pathname");
 	}
 
