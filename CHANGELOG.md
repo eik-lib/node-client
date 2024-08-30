@@ -1,3 +1,10 @@
+## [1.1.64](https://github.com/eik-lib/node-client/compare/v1.1.63...v1.1.64) (2024-08-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @eik/common to v4 ([6cf5860](https://github.com/eik-lib/node-client/commit/6cf586087b9222676fa05131664d0034b16f0c9d))
+
 ## [1.1.63](https://github.com/eik-lib/node-client/compare/v1.1.62...v1.1.63) (2024-08-15)
 
 
