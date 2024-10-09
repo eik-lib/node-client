@@ -294,4 +294,35 @@ export default class Eik {
 			'Eik config was not loaded or "loadMaps" is "false" when calling .maps()',
 		);
 	}
+
+	/**
+	 * Function that generates and returns an import map script tag for use in an document head.
+	 *
+	 * Currently only a single import map is supported in the browser so we need to merge together import map objects into a single object
+	 * by using a JS Map object. Last in wins so order of import maps defined in eik.json is important if multiple maps share the same entries.
+	 *
+	 * @example
+	 * ```
+	 * const importMap = eik.toHTML();
+	 *
+	 * <head>
+	 *   ...
+	 *   ${importMap}
+	 *   ...
+	 * </head>
+	 * ```
+	 *
+	 * @returns {string}
+	 */
+	toHTML() {
+		const allImportMapKeyValuePairs = this.maps().flatMap((map) =>
+			Object.entries(map.imports),
+		);
+		const mergedAndDedupedImportMapObject = Object.fromEntries(
+			new Map(allImportMapKeyValuePairs).entries(),
+		);
+		return `<script type="importmap">${JSON.stringify({
+			imports: mergedAndDedupedImportMapObject,
+		})}</script>`;
+	}
 }

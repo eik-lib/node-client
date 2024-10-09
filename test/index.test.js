@@ -342,3 +342,23 @@ tap.test(
 		t.end();
 	},
 );
+
+tap.test(
+	"Client - toHTML - import maps merged and script tag created",
+	async (t) => {
+		const client = new Eik({
+			loadMaps: true,
+			path: t.context.fixture,
+		});
+		await client.load();
+
+		const resolved = client.toHTML();
+
+		t.same(
+			resolved,
+			`<script type="importmap">${JSON.stringify({ imports: { eik: "/src/eik.js" } })}</script>`,
+			"Should return an import map script tag",
+		);
+		t.end();
+	},
+);
