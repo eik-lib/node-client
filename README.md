@@ -200,13 +200,6 @@ const client = new Eik({
 await client.load();
 
 const maps = client.maps();
-const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
-
-const html = `
-<script type="importmap">
-${JSON.stringify(combined, null, 2)}
-</script>
-`;
 ```
 
 #### returns
@@ -256,6 +249,33 @@ await client.load();
 
 client.base(); // http://localhost:8080/assets
 ```
+
+### .toHTML()
+
+Constructs an HTML import map script tag for use in the document head when doing import mapping.
+
+```js
+const client = new Eik({
+	loadMaps: true,
+	...
+});
+await client.load();
+
+const html = `
+	<html>
+	<head>
+		...
+		${client.toHTML()}
+		...
+	</head>
+	<body>
+		...
+	</body>
+	</html>
+`;
+```
+
+Due to browsers being restricted to a single import map, all import maps registered in eik.json or package.json will be merged down into a single import map with last in winning in case of duplicate keys.
 
 ## License
 

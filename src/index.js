@@ -269,23 +269,12 @@ export default class Eik {
 	 *
 	 * @example
 	 * ```js
-	 * // generate a <script type="importmap">
-	 * // for import mapping in the browser
 	 * const client = new Eik({
 	 *   loadMaps: true,
 	 * });
 	 * await client.load();
 	 *
 	 * const maps = client.maps();
-	 * const combined = maps
-	 *   .map((map) => map.imports)
-	 *   .reduce((map, acc) => ({ ...acc, ...map }), {});
-	 *
-	 * const html = `
-	 * <script type="importmap">
-	 * ${JSON.stringify(combined, null, 2)}
-	 * </script>
-	 * `;
 	 * ```
 	 */
 	maps() {
@@ -293,5 +282,37 @@ export default class Eik {
 		throw new Error(
 			'Eik config was not loaded or "loadMaps" is "false" when calling .maps()',
 		);
+	}
+
+	/**
+	 * Function that generates and returns an import map script tag for use in an document head.
+	 *
+	 * Only a single import map is allowed per HTML document.
+	 * A key (ex. `react`) can only be defined once.
+	 * If multiple import maps defined in `eik.json` use the same key, the last key wins.
+	 *
+	 * @example
+	 * ```
+	 * const importMap = eik.toHTML();
+	 *
+	 * <head>
+	 *   ...
+	 *   ${importMap}
+	 *   ...
+	 * </head>
+	 * ```
+	 *
+	 * @returns {string}
+	 */
+	toHTML() {
+		const allImportMapKeyValuePairs = this.maps().flatMap((map) =>
+			Object.entries(map.imports),
+		);
+		const mergedAndDedupedImportMapObject = Object.fromEntries(
+			new Map(allImportMapKeyValuePairs).entries(),
+		);
+		return `<script type="importmap">${JSON.stringify({
+			imports: mergedAndDedupedImportMapObject,
+		})}</script>`;
 	}
 }
