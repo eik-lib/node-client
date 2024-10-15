@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/eik-lib/node-client/compare/v1.1.64...v1.2.0) (2024-10-15)
+
+
+### Features
+
+* add toHTML function ([4576ddd](https://github.com/eik-lib/node-client/commit/4576dddc88afb5722b80574438b03dc41956af72))
+
 ## [1.1.64](https://github.com/eik-lib/node-client/compare/v1.1.63...v1.1.64) (2024-08-30)
 
 

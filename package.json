@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "1.1.64",
+  "version": "1.2.0",
   "description": "Utilities for working with assets and import maps on an Eik server",
   "type": "module",
   "main": "./dist/index.cjs",
