@@ -200,13 +200,6 @@ const client = new Eik({
 await client.load();
 
 const maps = client.maps();
-const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
-
-const html = `
-<script type="importmap">
-${JSON.stringify(combined, null, 2)}
-</script>
-`;
 ```
 
 #### returns

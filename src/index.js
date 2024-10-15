@@ -269,23 +269,12 @@ export default class Eik {
 	 *
 	 * @example
 	 * ```js
-	 * // generate a <script type="importmap">
-	 * // for import mapping in the browser
 	 * const client = new Eik({
 	 *   loadMaps: true,
 	 * });
 	 * await client.load();
 	 *
 	 * const maps = client.maps();
-	 * const combined = maps
-	 *   .map((map) => map.imports)
-	 *   .reduce((map, acc) => ({ ...acc, ...map }), {});
-	 *
-	 * const html = `
-	 * <script type="importmap">
-	 * ${JSON.stringify(combined, null, 2)}
-	 * </script>
-	 * `;
 	 * ```
 	 */
 	maps() {
@@ -300,7 +289,7 @@ export default class Eik {
 	 *
 	 * Only a single import map is allowed per HTML document.
 	 * A key (ex. `react`) can only be defined once.
-	 * If multiple import maps defined in `eik.json` use the same key the last one wins.
+	 * If multiple import maps defined in `eik.json` use the same key, the last key wins.
 	 *
 	 * @example
 	 * ```
