@@ -298,8 +298,9 @@ export default class Eik {
 	/**
 	 * Function that generates and returns an import map script tag for use in an document head.
 	 *
-	 * Currently only a single import map is supported in the browser so we need to merge together import map objects into a single object
-	 * by using a JS Map object. Last in wins so order of import maps defined in eik.json is important if multiple maps share the same entries.
+	 * Only a single import map is allowed per HTML document.
+	 * A key (ex. `react`) can only be defined once.
+	 * If multiple import maps defined in `eik.json` use the same key the last one wins.
 	 *
 	 * @example
 	 * ```
