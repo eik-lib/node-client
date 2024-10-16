@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/eik-lib/common/main/lib/schemas/eikjson.schema.json",
+  "name": "eik-image-fixture",
+  "version": "1.0.0",
+  "server": "https://cdn.eik.dev",
+  "type": "image",
+  "files": "./images"
+}
