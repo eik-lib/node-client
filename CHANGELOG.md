@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/eik-lib/node-client/compare/v1.2.0...v1.2.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* slugify image type ([#207](https://github.com/eik-lib/node-client/issues/207)) ([c0ed5e7](https://github.com/eik-lib/node-client/commit/c0ed5e787119657fa83647256a5f6179ccd24389))
+
 # [1.2.0](https://github.com/eik-lib/node-client/compare/v1.1.64...v1.2.0) (2024-10-15)
 
 
