@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/eik-lib/node-client/compare/v1.2.1...v2.0.0) (2024-11-15)
+
+
+### Bug Fixes
+
+* update dependencies ([c371b68](https://github.com/eik-lib/node-client/commit/c371b681354063601b2ce8e7525e57ac52fd3c9d))
+
+
+### BREAKING CHANGES
+
+* Requires Node >=20.5.0
+
 ## [1.2.1](https://github.com/eik-lib/node-client/compare/v1.2.0...v1.2.1) (2024-10-16)
 
 
