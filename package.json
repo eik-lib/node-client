@@ -43,22 +43,22 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "4.1.1",
+    "@eik/common": "5.0.0",
     "abslog": "2.4.4",
-    "undici": "5.28.4"
+    "undici": "6.21.0"
   },
   "devDependencies": {
-    "@eik/eslint-config": "1.0.4",
+    "@eik/eslint-config": "1.0.5",
     "@eik/prettier-config": "1.0.1",
     "@eik/semantic-release-config": "1.0.0",
     "@eik/typescript-config": "1.0.0",
-    "eslint": "9.13.0",
-    "npm-run-all2": "5.0.2",
+    "eslint": "9.14.0",
+    "npm-run-all2": "7.0.1",
     "prettier": "3.3.3",
     "rimraf": "6.0.1",
-    "rollup": "4.22.5",
-    "semantic-release": "24.0.0",
+    "rollup": "4.27.0",
+    "semantic-release": "24.2.0",
     "tap": "21.0.1",
-    "typescript": "5.5.4"
+    "typescript": "5.6.3"
   }
 }
