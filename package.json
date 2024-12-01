@@ -54,7 +54,7 @@
     "@eik/typescript-config": "1.0.0",
     "eslint": "9.16.0",
     "npm-run-all2": "7.0.1",
-    "prettier": "3.3.3",
+    "prettier": "3.4.1",
     "rimraf": "6.0.1",
     "rollup": "4.27.0",
     "semantic-release": "24.2.0",
