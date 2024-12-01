@@ -59,6 +59,6 @@
     "rollup": "4.28.0",
     "semantic-release": "24.2.0",
     "tap": "21.0.1",
-    "typescript": "5.6.3"
+    "typescript": "5.7.2"
   }
 }
