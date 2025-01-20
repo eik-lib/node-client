@@ -45,7 +45,7 @@
   "dependencies": {
     "@eik/common": "5.0.1",
     "abslog": "2.4.4",
-    "undici": "6.21.0"
+    "undici": "6.21.1"
   },
   "devDependencies": {
     "@eik/eslint-config": "1.0.7",
