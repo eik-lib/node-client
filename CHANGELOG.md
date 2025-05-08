@@ -1,3 +1,10 @@
+## [2.0.8](https://github.com/eik-lib/node-client/compare/v2.0.7...v2.0.8) (2025-05-08)
+
+
+### Bug Fixes
+
+* update eik/common to use the shared fetch ([#231](https://github.com/eik-lib/node-client/issues/231)) ([8ff38e8](https://github.com/eik-lib/node-client/commit/8ff38e844bdc971f5a6bc2b81dd1f062cef92ece))
+
 ## [2.0.7](https://github.com/eik-lib/node-client/compare/v2.0.6...v2.0.7) (2025-05-08)
 
 
