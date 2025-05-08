@@ -1,3 +1,10 @@
+## [2.0.7](https://github.com/eik-lib/node-client/compare/v2.0.6...v2.0.7) (2025-05-08)
+
+
+### Bug Fixes
+
+* redirections bug with Node 24 ([#230](https://github.com/eik-lib/node-client/issues/230)) ([9111ad0](https://github.com/eik-lib/node-client/commit/9111ad0c0fbc90dd89368507b6675740cb99cd5f))
+
 ## [2.0.6](https://github.com/eik-lib/node-client/compare/v2.0.5...v2.0.6) (2025-04-28)
 
 
