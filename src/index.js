@@ -1,5 +1,4 @@
 import { helpers } from "@eik/common";
-import { request, interceptors, Agent } from "undici";
 import { join } from "path";
 import { Asset } from "./asset.js";
 
@@ -9,62 +8,11 @@ const trimSlash = (value = "") => {
 };
 
 /**
- * @param {string[]} urls
- * @param {object} options
- * @param {number} options.maxRedirections - undici option for limiting redirects
- * @returns {Promise<ImportMap[]>}
- */
-const fetchImportMaps = async (urls = [], options) => {
-	try {
-		const maps = urls.map(async (map) => {
-			const response = await request(map, {
-				dispatcher: new Agent().compose(
-					interceptors.redirect({
-						maxRedirections: options.maxRedirections,
-					}),
-				),
-			});
-
-			if (response.statusCode === 404) {
-				throw new Error("Import map could not be found on server");
-			} else if (response.statusCode >= 400 && response.statusCode < 500) {
-				throw new Error("Server rejected client request");
-			} else if (response.statusCode >= 500) {
-				throw new Error("Server error");
-			}
-			let contentType = response.headers["content-type"];
-			if (!Array.isArray(contentType)) contentType = [contentType];
-
-			if (!contentType.find((type) => type.startsWith("application/json"))) {
-				const content = await response.body.text();
-				if (content.length === 0) {
-					throw new Error(
-						`${map} did not return JSON, got an empty response. HTTP status: ${response.statusCode}`,
-					);
-				}
-				throw new Error(
-					`${map} did not return JSON, got: ${content}. HTTP status: ${response.statusCode}`,
-				);
-			}
-
-			const json = await response.body.json();
-			return /** @type {ImportMap}*/ (json);
-		});
-		return await Promise.all(maps);
-	} catch (err) {
-		throw new Error(
-			`Unable to load import map file from server: ${err.message}`,
-		);
-	}
-};
-
-/**
  * @typedef {object} Options
  * @property {string} [base=null]
  * @property {boolean} [development=false]
  * @property {boolean} [loadMaps=false]
  * @property {string} [path=process.cwd()]
- * @property {number} [maxRedirections=2] Maximum number of redirects when looking up URLs.
  */
 
 /**
@@ -138,7 +86,6 @@ export default class Eik {
 	#path;
 	#base;
 	#maps;
-	#maxRedirections;
 
 	/**
 	 * @param {Options} options
@@ -148,7 +95,6 @@ export default class Eik {
 		loadMaps = false,
 		base = "",
 		path = process.cwd(),
-		maxRedirections = 2,
 	} = {}) {
 		this.#development = development;
 		this.#loadMaps = loadMaps;
@@ -156,7 +102,6 @@ export default class Eik {
 		this.#path = path;
 		this.#base = trimSlash(base);
 		this.#maps = [];
-		this.#maxRedirections = maxRedirections;
 	}
 
 	/**
@@ -167,11 +112,9 @@ export default class Eik {
 	 * use in {@link maps}.
 	 */
 	async load() {
-		this.#config = await helpers.getDefaults(this.#path);
+		this.#config = helpers.getDefaults(this.#path);
 		if (this.#loadMaps) {
-			this.#maps = await fetchImportMaps(this.#config.map, {
-				maxRedirections: this.#maxRedirections,
-			});
+			this.#maps = await helpers.fetchImportMaps(this.#config.map);
 		}
 	}
 

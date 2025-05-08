@@ -43,9 +43,8 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "5.0.4",
-    "abslog": "2.4.4",
-    "undici": "7.8.0"
+    "@eik/common": "5.1.0",
+    "abslog": "2.4.4"
   },
   "devDependencies": {
     "@eik/eslint-config": "1.0.13",
