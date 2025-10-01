@@ -47,7 +47,7 @@
     "abslog": "2.4.4"
   },
   "devDependencies": {
-    "@eik/eslint-config": "1.0.18",
+    "@eik/eslint-config": "1.0.23",
     "@eik/prettier-config": "1.0.1",
     "@eik/semantic-release-config": "1.0.5",
     "@eik/typescript-config": "1.0.0",
