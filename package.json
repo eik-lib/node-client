@@ -47,18 +47,18 @@
     "abslog": "2.4.4"
   },
   "devDependencies": {
-    "@eik/eslint-config": "1.0.18",
+    "@eik/eslint-config": "1.0.23",
     "@eik/prettier-config": "1.0.1",
-    "@eik/semantic-release-config": "1.0.5",
+    "@eik/semantic-release-config": "1.0.9",
     "@eik/typescript-config": "1.0.0",
-    "@types/node": "22.15.21",
-    "eslint": "9.25.1",
-    "npm-run-all2": "7.0.2",
-    "prettier": "3.4.1",
-    "rimraf": "6.0.1",
-    "rollup": "4.28.0",
-    "semantic-release": "24.2.3",
-    "tap": "21.0.1",
-    "typescript": "5.7.2"
+    "@types/node": "24.10.1",
+    "eslint": "9.39.1",
+    "npm-run-all2": "8.0.4",
+    "prettier": "3.7.0",
+    "rimraf": "6.1.2",
+    "rollup": "4.53.3",
+    "semantic-release": "25.0.2",
+    "tap": "21.4.0",
+    "typescript": "5.9.3"
   }
 }
