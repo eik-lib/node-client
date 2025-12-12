@@ -1,3 +1,10 @@
+## [2.0.14](https://github.com/eik-lib/node-client/compare/v2.0.13...v2.0.14) (2025-12-12)
+
+
+### Bug Fixes
+
+* update eik/common ([2d75f46](https://github.com/eik-lib/node-client/commit/2d75f4677afed41f744ac182439b75dad56b20e4))
+
 ## [2.0.13](https://github.com/eik-lib/node-client/compare/v2.0.12...v2.0.13) (2025-09-15)
 
 
