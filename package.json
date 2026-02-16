@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "5.1.16",
+    "@eik/common": "5.1.19",
     "abslog": "2.4.4"
   },
   "devDependencies": {
