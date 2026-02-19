@@ -210,6 +210,49 @@ tap.test(
 );
 
 tap.test(
+	'Client - Default settings - Config is loaded and isLocalhost is set to "true"',
+	async (t) => {
+		const client = new Eik({
+			isLocalhost: true,
+			path: t.context.fixture,
+		});
+		await client.load();
+
+		t.equal(client.name, "eik-fixture", 'Should be same as "name" in eik.json');
+		t.equal(client.version, "1.0.2", 'Should be same as "version" in eik.json');
+		t.equal(client.type, "pkg", 'Should be "pkg" in eik.json');
+		t.equal(
+			client.server,
+			t.context.address,
+			'Should be same as "server" in eik.json',
+		);
+		t.equal(
+			client.pathname,
+			"/pkg/eik-fixture/1.0.2",
+			'Should be composed path based on "type", "name" and "version"',
+		);
+		t.end();
+	},
+);
+
+tap.test(
+	'Client - Retrieve a file path - isLocalhost is set to "false"',
+	async (t) => {
+		const client = new Eik({
+			path: t.context.fixture,
+			isLocalhost: false,
+		});
+		await client.load();
+
+		const file = "/some/path/foo.js";
+		const resolved = client.file(file);
+
+		t.equal(resolved.value, `${client.server}${client.pathname}${file}`);
+		t.end();
+	},
+);
+
+tap.test(
 	'Client - Retrieve a file path - Development mode is set to "true" - Base is unset',
 	async (t) => {
 		const client = new Eik({
