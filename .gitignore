@@ -13,4 +13,5 @@ coverage
 .vscode
 dist/
 .tap
-types/
+types/*
+!types/options.d.ts

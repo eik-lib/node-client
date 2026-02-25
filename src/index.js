@@ -8,14 +8,6 @@ const trimSlash = (value = "") => {
 };
 
 /**
- * @typedef {object} Options
- * @property {string} [base=null]
- * @property {boolean} [development=false]
- * @property {boolean} [loadMaps=false]
- * @property {string} [path=process.cwd()]
- */
-
-/**
  * @typedef {object} ImportMap
  * @property {Record<string, string>} imports
  */
@@ -36,7 +28,7 @@ const trimSlash = (value = "") => {
  * @example
  * ```js
  * // Serve a local version of a file from `./public`
- * // in development and from Eik in production
+ * // on localhost and from Eik in any other environment.
  * import path from "node:path";
  * import Eik from "@eik/node-client";
  * import fastifyStatic from "@fastify/static";
@@ -49,15 +41,15 @@ const trimSlash = (value = "") => {
  * });
  *
  * const eik = new Eik({
- *    development: process.env.NODE_ENV === "development",
+ *    isLocalhost: process.env.NODE_ENV === "development",
  *    base: "/public",
  * });
  *
  * // load information from `eik.json` and the Eik server
  * await eik.load();
  *
- * // when development is true script.value will be /public/script.js.
- * // when development is false script.value will be
+ * // when isLocalhost is true script.value will be /public/script.js.
+ * // when isLocalhost is false script.value will be
  * // https://{server}/pkg/{name}/{version}/script.js
  * // where {server}, {name} and {version} are read from eik.json
  * const script = eik.file("/script.js");
@@ -80,7 +72,7 @@ const trimSlash = (value = "") => {
  * ```
  */
 export default class Eik {
-	#development;
+	#isLocalhost;
 	#loadMaps;
 	#config;
 	#path;
@@ -88,15 +80,17 @@ export default class Eik {
 	#maps;
 
 	/**
-	 * @param {Options} options
+	 * @param {import("../types/options.js").Options} options
 	 */
 	constructor({
-		development = false,
+		isLocalhost = false,
+		development,
 		loadMaps = false,
 		base = "",
 		path = process.cwd(),
 	} = {}) {
-		this.#development = development;
+		this.#isLocalhost =
+			typeof development !== "undefined" ? development : isLocalhost;
 		this.#loadMaps = loadMaps;
 		this.#config = {};
 		this.#path = path;
@@ -107,7 +101,7 @@ export default class Eik {
 	/**
 	 * Reads the Eik config from disk into the object instance, used for building {@link file} links in production.
 	 *
-	 * If {@link Options.loadMaps} is `true` the import maps
+	 * If `loadMaps` is `true` the import maps
 	 * defined in the Eik config will be fetched from the Eik server for
 	 * use in {@link maps}.
 	 */
@@ -172,28 +166,27 @@ export default class Eik {
 
 	/**
 	 * Similar to {@link file}, this method returns a path to the base on Eik
-	 * (ex. https://eik.store.com/pkg/my-app/1.0.0), or {@link Options.base}
-	 * if {@link Options.development} is true.
+	 * (ex. https://eik.store.com/pkg/my-app/1.0.0), or `base` if `isLocalhost` is true.
 	 *
 	 * You can use this instead of `file` if you have a directory full of files
 	 * and you don't need {@link Asset.integrity}.
 	 *
 	 * @returns {string} The base path for assets published on Eik
-	 * @throws when {@link Options.development} is false if called before calling {@link load}
+	 * @throws when `isLocalhost` is false if called before calling {@link load}
 	 */
 	base() {
-		if (this.#development) return this.#base;
+		if (this.#isLocalhost) return this.#base;
 		return `${this.server}${this.pathname}`;
 	}
 
 	/**
 	 * Get a link to a file that is published on Eik when running in production.
-	 * When {@link Options.development} is `true` the pathname is prefixed
-	 * with the {@link Options.base} option instead of pointing to Eik.
+	 * When `isLocalhost` is `true` the pathname is prefixed
+	 * with the `base` option instead of pointing to Eik.
 	 *
 	 * @param {string} pathname pathname to the file relative to the base on Eik (ex: /path/to/script.js for a prod URL https://eik.store.com/pkg/my-app/1.0.0/path/to/script.js)
 	 * @returns {import('./asset.js').Asset}
-	 * @throws when {@link Options.development} is false if called before calling {@link load}
+	 * @throws when `isLocalhost` is false if called before calling {@link load}
 	 *
 	 * @example
 	 * ```js
@@ -239,13 +232,13 @@ export default class Eik {
 	}
 
 	/**
-	 * When {@link Options.loadMaps} is `true` and you call {@link load}, the client
+	 * When `loadMaps` is `true` and you call {@link load}, the client
 	 * fetches the configured import maps from the Eik server.
 	 *
 	 * This method returns the import maps that were fetched during `load`.
 	 *
 	 * @returns {ImportMap[]}
-	 * @throws if {@link Options.loadMaps} is not `true` or called before calling {@link load}
+	 * @throws if `loadMaps` is not `true` or called before calling {@link load}
 	 *
 	 * @example
 	 * ```js
