@@ -103,12 +103,13 @@ await eik.load();
 
 ### options
 
-| option      | default         | type      | required | details                                                                                          |
-| ----------- | --------------- | --------- | -------- | ------------------------------------------------------------------------------------------------ |
-| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                                   |
-| development | `false`         | `boolean` | `false`  | Set the module in development mode or not.                                                       |
-| loadMaps    | `false`         | `boolean` | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not. |
-| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config.                   |
+| option      | default         | type      | required | details                                                                                                     |
+| ----------- | --------------- | --------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| base        | `null`          | `string`  | `false`  | Base root to be used for returned asset files.                                                              |
+| isLocalhost | `false`         | `boolean` | `false`  | Determines whether the client produces links to localhost (f. ex. during development) or to the Eik server. |
+| development | `false`         | `boolean` | `false`  | (deprecated) Same as isLocalhost                                                                            |
+| loadMaps    | `false`         | `boolean` | `false`  | Specifies whether import maps defined in the config should be loaded from the Eik server or not.            |
+| path        | `process.cwd()` | `string`  | `false`  | Path to directory containing an eik.json file or package.json with eik config.                              |
 
 ## API
 
