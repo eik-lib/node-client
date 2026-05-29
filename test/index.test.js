@@ -1,17 +1,19 @@
-/// <reference path="../types/index.d.ts" />
-
 import { mkdtemp, writeFile } from "fs/promises";
 import { helpers } from "@eik/common";
-import path from "path";
-import http from "http";
-import tap from "tap";
-import os from "os";
+import path from "node:path";
+import http from "node:http";
+import { describe, test, beforeEach, afterEach } from "node:test";
+import assert from "node:assert";
+import os from "node:os";
 
 import Eik from "../src/index.js";
 
 const FIXTURE_PATH = `${process.cwd()}/fixtures`;
 const FIXTURE_FILE = await helpers.getDefaults(FIXTURE_PATH);
 
+/**
+ * @param {import('net').AddressInfo} address
+ */
 const writeTempConfig = async (address) => {
 	const pathname = await mkdtemp(
 		path.join(os.tmpdir(), `eik-${address.port.toString()}-`),
@@ -69,297 +71,282 @@ class Server {
 	}
 }
 
-tap.beforeEach(async (t) => {
-	const server = new Server();
-	const app = await server.listen();
-	const address = app.address();
-	const fixture = await writeTempConfig(address);
+describe("Eik client", () => {
+	let app;
+	let address;
+	let fixture;
 
-	t.context = {
-		app,
-		address: `http://${address.address}:${address.port}`,
-		fixture,
-	};
-});
-
-tap.afterEach(async (t) => {
-	await t.context.app.close();
-});
-
-tap.test("Client - Default settings - Config is not loaded", (t) => {
-	const client = new Eik();
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.name;
-		},
-		/Eik config was not loaded before calling .name/,
-		"Should throw",
-	);
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.version;
-		},
-		/Eik config was not loaded before calling .version/,
-		"Should throw",
-	);
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.type;
-		},
-		/Eik config was not loaded before calling .type/,
-		"Should throw",
-	);
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.server;
-		},
-		/Eik config was not loaded before calling .server/,
-		"Should throw",
-	);
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.pathname;
-		},
-		/Eik config was not loaded before calling .pathname/,
-		"Should throw",
-	);
-
-	t.throws(
-		() => {
-			// eslint-disable-next-line no-unused-vars
-			const val = client.maps();
-		},
-		/Eik config was not loaded or "loadMaps" is "false" when calling .maps()/,
-		"Should throw",
-	);
-
-	t.end();
-});
-
-tap.test("Client - Default settings - Config is loaded", async (t) => {
-	const client = new Eik({
-		path: t.context.fixture,
+	beforeEach(async () => {
+		const server = new Server();
+		app = await server.listen();
+		const addr = /** @type {import('net').AddressInfo} */ (app.address());
+		fixture = await writeTempConfig(addr);
+		address = `http://${addr.address}:${addr.port}`;
 	});
-	await client.load();
 
-	t.equal(client.name, "eik-fixture", 'Should be same as "name" in eik.json');
-	t.equal(client.version, "1.0.2", 'Should be same as "version" in eik.json');
-	t.equal(client.type, "pkg", 'Should be "pkg" in eik.json');
-	t.equal(
-		client.server,
-		t.context.address,
-		'Should be same as "server" in eik.json',
-	);
-	t.equal(
-		client.pathname,
-		"/pkg/eik-fixture/1.0.2",
-		'Should be composed path based on "type", "name" and "version"',
-	);
-	t.end();
-});
+	afterEach(async () => {
+		await app.close();
+	});
 
-tap.test(
-	'Client - Default settings - Config is loaded and development mode is set to "true"',
-	async (t) => {
+	test("Client - Default settings - Config is not loaded", () => {
+		const client = new Eik();
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.name;
+			},
+			/Eik config was not loaded before calling .name/,
+			"Should throw",
+		);
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.version;
+			},
+			/Eik config was not loaded before calling .version/,
+			"Should throw",
+		);
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.type;
+			},
+			/Eik config was not loaded before calling .type/,
+			"Should throw",
+		);
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.server;
+			},
+			/Eik config was not loaded before calling .server/,
+			"Should throw",
+		);
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.pathname;
+			},
+			/Eik config was not loaded before calling .pathname/,
+			"Should throw",
+		);
+
+		assert.throws(
+			() => {
+				// eslint-disable-next-line no-unused-vars
+				const val = client.maps();
+			},
+			/Eik config was not loaded or "loadMaps" is "false" when calling .maps()/,
+			"Should throw",
+		);
+	});
+
+	test("Client - Default settings - Config is loaded", async () => {
 		const client = new Eik({
-			development: true,
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
-		t.equal(client.name, "eik-fixture", 'Should be same as "name" in eik.json');
-		t.equal(client.version, "1.0.2", 'Should be same as "version" in eik.json');
-		t.equal(client.type, "pkg", 'Should be "pkg" in eik.json');
-		t.equal(
+		assert.strictEqual(
+			client.name,
+			"eik-fixture",
+			'Should be same as "name" in eik.json',
+		);
+		assert.strictEqual(
+			client.version,
+			"1.0.2",
+			'Should be same as "version" in eik.json',
+		);
+		assert.strictEqual(client.type, "pkg", 'Should be "pkg" in eik.json');
+		assert.strictEqual(
 			client.server,
-			t.context.address,
+			address,
 			'Should be same as "server" in eik.json',
 		);
-		t.equal(
+		assert.strictEqual(
 			client.pathname,
 			"/pkg/eik-fixture/1.0.2",
 			'Should be composed path based on "type", "name" and "version"',
 		);
-		t.end();
-	},
-);
+	});
 
-tap.test(
-	'Client - Retrieve a file path - Development mode is set to "false"',
-	async (t) => {
+	test('Client - Default settings - Config is loaded and development mode is set to "true"', async () => {
 		const client = new Eik({
-			path: t.context.fixture,
+			development: true,
+			path: fixture,
+		});
+		await client.load();
+
+		assert.strictEqual(
+			client.name,
+			"eik-fixture",
+			'Should be same as "name" in eik.json',
+		);
+		assert.strictEqual(
+			client.version,
+			"1.0.2",
+			'Should be same as "version" in eik.json',
+		);
+		assert.strictEqual(client.type, "pkg", 'Should be "pkg" in eik.json');
+		assert.strictEqual(
+			client.server,
+			address,
+			'Should be same as "server" in eik.json',
+		);
+		assert.strictEqual(
+			client.pathname,
+			"/pkg/eik-fixture/1.0.2",
+			'Should be composed path based on "type", "name" and "version"',
+		);
+	});
+
+	test('Client - Retrieve a file path - Development mode is set to "false"', async () => {
+		const client = new Eik({
+			path: fixture,
 		});
 		await client.load();
 
 		const file = "/some/path/foo.js";
 		const resolved = client.file(file);
 
-		t.equal(resolved.value, `${client.server}${client.pathname}${file}`);
-		t.end();
-	},
-);
+		assert.strictEqual(
+			resolved.value,
+			`${client.server}${client.pathname}${file}`,
+		);
+	});
 
-tap.test(
-	'Client - Retrieve a file path - Development mode is set to "true" - Base is unset',
-	async (t) => {
+	test('Client - Retrieve a file path - Development mode is set to "true" - Base is unset', async () => {
 		const client = new Eik({
 			development: true,
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.file("/some/path/foo.js");
 
-		t.equal(resolved.value, "/some/path/foo.js");
-		t.end();
-	},
-);
+		assert.strictEqual(resolved.value, "/some/path/foo.js");
+	});
 
-tap.test(
-	'Client - Retrieve a file path - Development mode is set to "true" - Base is set to absolute URL',
-	async (t) => {
+	test('Client - Retrieve a file path - Development mode is set to "true" - Base is set to absolute URL', async () => {
 		const client = new Eik({
 			development: true,
 			base: "http://localhost:7777/prefix/",
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.file("/some/path/foo.js");
 
-		t.equal(resolved.value, "http://localhost:7777/prefix/some/path/foo.js");
-		t.end();
-	},
-);
-
-tap.test("Client - Load maps", async (t) => {
-	const client = new Eik({
-		loadMaps: true,
-		path: t.context.fixture,
+		assert.strictEqual(
+			resolved.value,
+			"http://localhost:7777/prefix/some/path/foo.js",
+		);
 	});
-	await client.load();
 
-	const maps = client.maps();
-	t.same(
-		maps,
-		[{ imports: { eik: "/src/eik.js" } }, { imports: { eik: "/src/eik.js" } }],
-		"Should return maps",
-	);
+	test("Client - Load maps", async () => {
+		const client = new Eik({
+			loadMaps: true,
+			path: fixture,
+		});
+		await client.load();
 
-	const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
+		const maps = client.maps();
+		assert.deepStrictEqual(
+			maps,
+			[
+				{ imports: { eik: "/src/eik.js" } },
+				{ imports: { eik: "/src/eik.js" } },
+			],
+			"Should return maps",
+		);
 
-	t.same(combined, { imports: { eik: "/src/eik.js" } });
+		const combined = maps.reduce((map, acc) => ({ ...acc, ...map }), {});
 
-	const html = `<script type="importmap">
+		assert.deepStrictEqual(combined, { imports: { eik: "/src/eik.js" } });
+
+		const html = `<script type="importmap">
 ${JSON.stringify(combined, null, 2)}
 </script>`;
 
-	t.same(
-		html,
-		`<script type="importmap">
+		assert.deepStrictEqual(
+			html,
+			`<script type="importmap">
 {
   "imports": {
     "eik": "/src/eik.js"
   }
 }
 </script>`,
-	);
+		);
+	});
 
-	t.end();
-});
-
-tap.test(
-	'Client - Retrieve a base - Development mode is set to "true" - Base is unset',
-	async (t) => {
+	test('Client - Retrieve a base - Development mode is set to "true" - Base is unset', async () => {
 		const client = new Eik({
 			development: true,
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.base();
 
-		t.equal(resolved, "", "Should be an empty string");
-		t.end();
-	},
-);
+		assert.strictEqual(resolved, "", "Should be an empty string");
+	});
 
-tap.test(
-	'Client - Retrieve a base - Development mode is set to "true" - Base is set to a relative URL',
-	async (t) => {
+	test('Client - Retrieve a base - Development mode is set to "true" - Base is set to a relative URL', async () => {
 		const client = new Eik({
 			development: true,
 			base: "/prefix",
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.base();
 
-		t.equal(resolved, "/prefix");
-		t.end();
-	},
-);
+		assert.strictEqual(resolved, "/prefix");
+	});
 
-tap.test(
-	'Client - Retrieve a base - Development mode is set to "true" - Base is set to a absolute URL',
-	async (t) => {
+	test('Client - Retrieve a base - Development mode is set to "true" - Base is set to a absolute URL', async () => {
 		const client = new Eik({
 			development: true,
 			base: "http://localhost:7777/prefix/some/path/",
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.base();
 
-		t.equal(resolved, "http://localhost:7777/prefix/some/path");
-		t.end();
-	},
-);
+		assert.strictEqual(resolved, "http://localhost:7777/prefix/some/path");
+	});
 
-tap.test(
-	'Client - Retrieve a base - Development mode is set to "false"',
-	async (t) => {
+	test('Client - Retrieve a base - Development mode is set to "false"', async () => {
 		const client = new Eik({
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.base();
 
-		t.equal(resolved, `${t.context.address}/pkg/eik-fixture/1.0.2`);
-		t.end();
-	},
-);
+		assert.strictEqual(resolved, `${address}/pkg/eik-fixture/1.0.2`);
+	});
 
-tap.test(
-	"Client - toHTML - import maps merged and script tag created",
-	async (t) => {
+	test("Client - toHTML - import maps merged and script tag created", async () => {
 		const client = new Eik({
 			loadMaps: true,
-			path: t.context.fixture,
+			path: fixture,
 		});
 		await client.load();
 
 		const resolved = client.toHTML();
 
-		t.same(
+		assert.deepStrictEqual(
 			resolved,
 			`<script type="importmap">${JSON.stringify({ imports: { eik: "/src/eik.js" } })}</script>`,
 			"Should return an import map script tag",
 		);
-		t.end();
-	},
-);
+	});
+});
