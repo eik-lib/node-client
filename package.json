@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "clean": "rimraf .tap dist node_modules types",
+    "clean": "node --input-type=module --eval \"import{rmSync}from'node:fs';['.tap','dist','node_modules','types'].forEach(p=>rmSync(p,{recursive:true,force:true}))\"",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "tap --disable-coverage --allow-empty-coverage",
@@ -43,22 +43,21 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "5.1.27",
+    "@eik/common": "5.1.29",
     "abslog": "2.4.4"
   },
   "devDependencies": {
-    "@eik/eslint-config": "2.0.2",
-    "@eik/prettier-config": "1.0.1",
-    "@eik/semantic-release-config": "1.0.15",
-    "@eik/typescript-config": "1.0.1",
-    "@types/node": "24.10.1",
-    "eslint": "9.39.4",
-    "npm-run-all2": "8.0.4",
-    "prettier": "3.7.4",
-    "rimraf": "6.1.2",
-    "rollup": "4.59.0",
-    "semantic-release": "25.0.2",
-    "tap": "21.5.0",
-    "typescript": "5.9.3"
+    "@eik/eslint-config": "2.0.7",
+    "@eik/prettier-config": "1.0.2",
+    "@eik/semantic-release-config": "1.0.17",
+    "@eik/typescript-config": "1.0.2",
+    "@types/node": "25.9.1",
+    "eslint": "10.4.0",
+    "npm-run-all2": "9.0.1",
+    "prettier": "3.8.3",
+    "rollup": "4.60.4",
+    "semantic-release": "25.0.3",
+    "tap": "21.7.4",
+    "typescript": "6.0.3"
   }
 }

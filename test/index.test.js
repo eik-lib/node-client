@@ -32,7 +32,7 @@ const writeTempConfig = async (address) => {
 class Server {
 	constructor() {
 		this.server = http.createServer((req, res) => {
-			if (req.url.startsWith("/map/mod")) {
+			if (req.url && req.url.startsWith("/map/mod")) {
 				res.statusCode = 200;
 				res.setHeader("Content-Type", "application/json");
 				res.end(
@@ -59,6 +59,7 @@ class Server {
 		});
 	}
 
+	/** @returns {Promise<void>} */
 	close() {
 		return new Promise((resolve) => {
 			this.server.close(() => {
