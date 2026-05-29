@@ -1,3 +1,10 @@
+## [2.0.27](https://github.com/eik-lib/node-client/compare/v2.0.26...v2.0.27) (2026-05-29)
+
+
+### Bug Fixes
+
+* Replace Tap with node.js test runner ([#278](https://github.com/eik-lib/node-client/issues/278)) ([25b83ff](https://github.com/eik-lib/node-client/commit/25b83ffda7c1430c46e44967ffe9124daf4f78e4))
+
 ## [2.0.26](https://github.com/eik-lib/node-client/compare/v2.0.25...v2.0.26) (2026-05-29)
 
 
