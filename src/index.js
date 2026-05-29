@@ -1,5 +1,5 @@
 import { helpers } from "@eik/common";
-import { join } from "path";
+import { join } from "node:path";
 import { Asset } from "./asset.js";
 
 const trimSlash = (value = "") => {
@@ -82,10 +82,12 @@ const trimSlash = (value = "") => {
 export default class Eik {
 	#development;
 	#loadMaps;
-	#config;
+	/** @type {import('@eik/common').EikConfig | null} */
+	#config = null;
 	#path;
 	#base;
-	#maps;
+	/** @type {ImportMap[]} */
+	#maps = [];
 
 	/**
 	 * @param {Options} options
@@ -98,10 +100,8 @@ export default class Eik {
 	} = {}) {
 		this.#development = development;
 		this.#loadMaps = loadMaps;
-		this.#config = {};
 		this.#path = path;
 		this.#base = trimSlash(base);
-		this.#maps = [];
 	}
 
 	/**
@@ -113,7 +113,7 @@ export default class Eik {
 	 */
 	async load() {
 		this.#config = helpers.getDefaults(this.#path);
-		if (this.#loadMaps) {
+		if (this.#loadMaps && this.#config) {
 			this.#maps = await helpers.fetchImportMaps(this.#config.map);
 		}
 	}
@@ -123,7 +123,7 @@ export default class Eik {
 	 * @throws if read before calling {@link load}
 	 */
 	get name() {
-		if (this.#config.name) return this.#config.name;
+		if (this.#config && this.#config.name) return this.#config.name;
 		throw new Error("Eik config was not loaded before calling .name");
 	}
 
@@ -132,7 +132,7 @@ export default class Eik {
 	 * @throws if read before calling {@link load}
 	 */
 	get version() {
-		if (this.#config.version) return this.#config.version;
+		if (this.#config && this.#config.version) return this.#config.version;
 		throw new Error("Eik config was not loaded before calling .version");
 	}
 
@@ -141,8 +141,9 @@ export default class Eik {
 	 * @throws if read before calling {@link load}
 	 */
 	get type() {
-		if (this.#config.type && this.#config.type === "package") return "pkg";
-		if (this.#config.type) return this.#config.type;
+		if (this.#config && this.#config.type && this.#config.type === "package")
+			return "pkg";
+		if (this.#config && this.#config.type) return this.#config.type;
 		throw new Error("Eik config was not loaded before calling .type");
 	}
 
@@ -151,7 +152,7 @@ export default class Eik {
 	 * @throws if read before calling {@link load}
 	 */
 	get server() {
-		if (this.#config.server) return this.#config.server;
+		if (this.#config && this.#config.server) return this.#config.server;
 		throw new Error("Eik config was not loaded before calling .server");
 	}
 
@@ -160,7 +161,12 @@ export default class Eik {
 	 * @throws if read before calling {@link load}
 	 */
 	get pathname() {
-		if (this.#config.type && this.#config.name && this.#config.version)
+		if (
+			this.#config &&
+			this.#config.type &&
+			this.#config.name &&
+			this.#config.version
+		)
 			return join(
 				"/",
 				helpers.typeSlug(this.type),
@@ -258,7 +264,8 @@ export default class Eik {
 	 * ```
 	 */
 	maps() {
-		if (this.#config.version && this.#loadMaps) return this.#maps;
+		if (this.#config && this.#config.version && this.#loadMaps)
+			return this.#maps;
 		throw new Error(
 			'Eik config was not loaded or "loadMaps" is "false" when calling .maps()',
 		);
