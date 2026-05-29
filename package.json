@@ -3,31 +3,26 @@
   "version": "2.0.26",
   "description": "Utilities for working with assets and import maps on an Eik server",
   "type": "module",
-  "main": "./dist/index.cjs",
   "types": "./types/index.d.ts",
   "exports": {
     "types": "./types/index.d.ts",
-    "import": "./src/index.js",
-    "require": "./dist/index.cjs"
+    "import": "./src/index.js"
   },
   "files": [
     "CHANGELOG.md",
     "package.json",
     "LICENSE",
-    "dist",
     "src",
     "types"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "clean": "node --input-type=module --eval \"import{rmSync}from'node:fs';['.tap','dist','node_modules','types'].forEach(p=>rmSync(p,{recursive:true,force:true}))\"",
+    "clean": "node --input-type=module --eval \"import{rmSync}from'node:fs';['.tap','node_modules','types'].forEach(p=>rmSync(p,{recursive:true,force:true}))\"",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "node --test 'test/*.test.js'",
     "types": "run-s types:module types:test",
     "types:module": "tsc",
-    "types:test": "tsc --project tsconfig.test.json",
-    "prepare": "npm run -s build"
+    "types:test": "tsc --project tsconfig.test.json"
   },
   "repository": {
     "type": "git",
@@ -55,7 +50,6 @@
     "eslint": "10.4.0",
     "npm-run-all2": "9.0.1",
     "prettier": "3.8.3",
-    "rollup": "4.60.4",
     "semantic-release": "25.0.3",
     "typescript": "6.0.3"
   }
