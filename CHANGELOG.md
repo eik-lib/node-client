@@ -1,3 +1,10 @@
+## [2.0.26](https://github.com/eik-lib/node-client/compare/v2.0.25...v2.0.26) (2026-05-29)
+
+
+### Bug Fixes
+
+* Bump dependencies ([#273](https://github.com/eik-lib/node-client/issues/273)) ([de93c5e](https://github.com/eik-lib/node-client/commit/de93c5e3cbe9614aa10a67ed21f629ec35dbb17a))
+
 ## [2.0.25](https://github.com/eik-lib/node-client/compare/v2.0.24...v2.0.25) (2026-05-25)
 
 
