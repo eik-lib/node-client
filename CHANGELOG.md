@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/eik-lib/node-client/compare/v2.0.27...v2.1.0) (2026-06-03)
+
+
+### Features
+
+* Remove CommonJS build ([#279](https://github.com/eik-lib/node-client/issues/279)) ([8d0d75b](https://github.com/eik-lib/node-client/commit/8d0d75b5fd5bd9f9aa49769582f56acbe5d890b6))
+
 ## [2.0.27](https://github.com/eik-lib/node-client/compare/v2.0.26...v2.0.27) (2026-05-29)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@eik/node-client",
-  "version": "2.0.27",
+  "version": "2.1.0",
   "description": "Utilities for working with assets and import maps on an Eik server",
   "type": "module",
   "types": "./types/index.d.ts",
