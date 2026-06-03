@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/eik-lib/node-client#readme",
   "dependencies": {
-    "@eik/common": "5.1.29",
+    "@eik/common": "5.1.30",
     "abslog": "2.4.4"
   },
   "devDependencies": {
@@ -47,7 +47,7 @@
     "@eik/semantic-release-config": "1.0.17",
     "@eik/typescript-config": "1.0.2",
     "@types/node": "25.9.1",
-    "eslint": "10.4.0",
+    "eslint": "10.4.1",
     "npm-run-all2": "9.0.1",
     "prettier": "3.8.3",
     "semantic-release": "25.0.3",
