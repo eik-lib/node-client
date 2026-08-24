@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/eik-lib/node-client/compare/v2.1.3...v2.1.4) (2026-08-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @eik/common to v5.2.1 ([#301](https://github.com/eik-lib/node-client/issues/301)) ([7a4cae2](https://github.com/eik-lib/node-client/commit/7a4cae21aadb266e0d4aed7ca75d137ed74670ab))
+
 ## [2.1.3](https://github.com/eik-lib/node-client/compare/v2.1.2...v2.1.3) (2026-06-22)
 
 
